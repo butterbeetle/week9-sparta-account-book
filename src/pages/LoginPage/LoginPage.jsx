@@ -1,7 +1,11 @@
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import api from "../../api/api";
 import DataInput from "../../components/DataInput";
+import { useToast } from "../../context/toast.context";
 import formatDate from "../../utils/formatDate";
+import uuid from "../../utils/uuid";
 
 const initialInputData = {
   date: formatDate(new Date()),
@@ -11,7 +15,7 @@ const initialInputData = {
 };
 
 const loginDatas = [
-  { id: "email", type: "email", label: "이메일", minLength: 4, maxLength: 10 },
+  { id: "id", label: "아이디", minLength: 4, maxLength: 10 },
   {
     id: "password",
     type: "password",
@@ -22,11 +26,37 @@ const loginDatas = [
 ];
 
 function LoginPage() {
-  const [inputData, setInputData] = useState(initialInputData);
+  const toast = useToast();
+  const { mutateAsync: LogIn } = useMutation({
+    mutationFn: (loginUserInfo) => api.auth.logIn(loginUserInfo),
+  });
+  const [loginUserInfo, setLoginUserInfo] = useState(initialInputData);
 
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("SUBMIT___");
+    console.log("LOGIN SUBMIT___");
+    try {
+      const { data } = await LogIn(loginUserInfo);
+      // console.log(data);
+      //TODO Query string(선택) 한번 더 보기
+      toast.createToast({
+        id: uuid(),
+        title: "Success",
+        content: "로그인에 성공하였습니다.",
+        time: 3000,
+        variant: "success",
+      });
+    } catch (error) {
+      const { code, message, response } = error;
+      // console.log("LOGIN ERROR___", code, message, response.data.message);
+      toast.createToast({
+        id: uuid(),
+        title: code,
+        content: response.data.message,
+        time: 3000,
+        variant: "error",
+      });
+    }
   };
 
   return (
@@ -45,8 +75,8 @@ function LoginPage() {
             id={id}
             type={type}
             label={label}
-            inputData={inputData[id]}
-            setInputData={setInputData}
+            inputData={loginUserInfo[id]}
+            setInputData={setLoginUserInfo}
             minLength={minLength}
             maxLength={maxLength}
           />

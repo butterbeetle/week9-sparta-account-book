@@ -27,7 +27,7 @@ function SignUpPage() {
   const toast = useToast();
   const nav = useNavigate();
   const { mutateAsync: SignUp } = useMutation({
-    mutationFn: (data) => api.auth.signUp(data),
+    mutationFn: (signUpUserInfo) => api.auth.signUp(signUpUserInfo),
   });
 
   const [inputData, setInputData] = useState({});
@@ -56,12 +56,12 @@ function SignUpPage() {
       });
       nav("/login", { replace: true });
     } catch (error) {
-      const { code, message } = error;
-      // console.log("ERROR___", code, message);
+      const { code, message, response } = error;
+      console.log("SIGN UP ERROR___", code, message, response.data.message);
       toast.createToast({
         id: uuid(),
         title: code,
-        content: message,
+        content: response.data.message,
         time: 3000,
         variant: "error",
       });
