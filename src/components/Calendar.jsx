@@ -2,20 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { monthSelectHandler } from "../redux/slices/record.slice";
 
-const CalendarDiv = styled.div`
-  padding: 16px;
-  background-color: #e2e8f0;
-  border-radius: 16px;
-`;
-
-const CalendarUl = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  justify-content: center;
-  align-items: center;
-`;
-
 const Calendarli = styled.li`
   padding: 8px;
   border-radius: 8px;
@@ -36,8 +22,8 @@ export default function Calendar() {
   const { selectedMonth } = useSelector((state) => state.record);
 
   return (
-    <CalendarDiv>
-      <CalendarUl>
+    <div className="p-4 bg-[#e2e8f0] rounded-2xl">
+      <ul className="flex flex-wrap gap-2 justify-center items-center">
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
           <Calendarli
             key={month}
@@ -47,7 +33,7 @@ export default function Calendar() {
             {month}월
           </Calendarli>
         ))}
-      </CalendarUl>
-    </CalendarDiv>
+      </ul>
+    </div>
   );
 }

@@ -1,78 +1,4 @@
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-
-const Div = styled.div`
-  position: relative;
-`;
-
-const Span = styled.span`
-  top: 4px;
-  right: 24px;
-  font-size: 12px;
-  line-height: 24px;
-  user-select: none;
-  color: #a1a1aa;
-`;
-
-const Label = styled.label`
-  position: absolute;
-  top: 16px;
-  left: 24px;
-  font-size: 16px;
-  line-height: 24px;
-  user-select: none;
-  color: #a1a1aa;
-  transform: translateY(-12px) scale(0.75);
-  transform-origin: 0;
-`;
-
-const Input = styled.input`
-  display: block;
-  padding: 24px;
-  padding-bottom: 1px;
-  width: 100%;
-  font-size: 16px;
-  line-height: 24px;
-  appearance: none;
-
-  &:focus {
-    outline: none;
-  }
-
-  border: 1px solid #0a0426;
-  border-radius: 8px;
-  font-size: 16px;
-  color: #0a0426;
-  background-color: #fffafc;
-  outline: none;
-  transition: border-color 0.3s, box-shadow 0.3s;
-
-  ${(props) =>
-    props.type === "date" &&
-    `&:hover{
-      },
-      &::-webkit-calendar-picker-indicator {
-        filter: invert(20%);
-        cursor: pointer;
-      }
-    `}
-
-  &:hover {
-    transition-duration: 150ms;
-    box-shadow: 0 2px 5px rgba(43, 2, 2, 0.5);
-  }
-`;
-
-const P = styled.p`
-  position: absolute;
-  top: 4px;
-  left: 48px;
-  font-size: 12px;
-  line-height: 24px;
-  color: red;
-  cursor: default;
-  user-select: none;
-`;
 
 export default function DataInput({
   id,
@@ -92,8 +18,11 @@ export default function DataInput({
   };
 
   return (
-    <Div>
-      <Input
+    <div className="relative">
+      <input
+        className="p-6 pb-px w-full text-base appearance-none outline-none
+        border border-solid border-[#0a0426] rounded-md text-[#0a0426]
+        hover:shadow-md peer"
         id={id}
         type={type}
         value={inputData}
@@ -102,17 +31,30 @@ export default function DataInput({
         maxLength={maxLength}
         onChange={(e) => onChangeHandler(e.target.value)}
       />
-      <Label htmlFor={id}>{label}</Label>
-      {errorData[id] && (
-        <P className="">{`${
-          type === "date" ? "를" : "을"
-        } 제대로 입력해주세요.`}</P>
-      )}
+      <label
+        className="absolute top-4 left-6 text-base select-none text-[#a1a1aa] cursor-text
+        duration-150 transform
+        origin-[0]
+        -translate-y-3 scale-75
+        peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
+        peer-focus:scale-75 peer-focus:-translate-y-3"
+        htmlFor={id}
+      >
+        <div className="flex">
+          {label}
+          {errorData[id] && (
+            <p className="cursor-text text-base text-red-700 select-none ">{`${
+              type === "date" ? "를" : "을"
+            } 제대로 입력해주세요.`}</p>
+          )}
+        </div>
+      </label>
+
       {type !== "date" && (
-        <Span className="absolute top-0 right-0">{`${
+        <span className="absolute top-1 right-6 text-[12px] select-none text-[#a1a1aa]">{`${
           (inputData + "").length
-        }/${maxLength}`}</Span>
+        }/${maxLength}`}</span>
       )}
-    </Div>
+    </div>
   );
 }

@@ -16,35 +16,6 @@ import validateInput from "../utils/validateInput";
 import Modal from "./ui/Modal";
 import Portal from "./ui/Portal";
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 8px;
-  background-color: #e2e8f0;
-  border-radius: 16px;
-`;
-
-const Button = styled.button`
-  padding: 12px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #ffffff;
-  background-color: #0a0426;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #1c1c3b;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  &:active {
-    background-color: #0a0426;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-`;
 const initialInputData = {
   date: formatDate(new Date()),
   category: "",
@@ -118,7 +89,10 @@ export default function DataInputForm() {
   };
 
   return (
-    <Form onSubmit={onSubmitHandler}>
+    <form
+      className="flex flex-col gap-2 p-2 bg-[#e2e8f0] rounded-2xl"
+      onSubmit={onSubmitHandler}
+    >
       {inputsData.map(({ id, type, label }) => (
         <DataInput
           key={id}
@@ -129,11 +103,22 @@ export default function DataInputForm() {
           setInputData={setInputData}
         />
       ))}
-      <Button type="submit">{isUpdate ? "수정" : "추가"}</Button>
+      <button
+        className="p-3 text-base font-bold text-white bg-[#0a0426] border-none rounded-lg cursor-pointer
+      hover:bg-[#1c1c3b] hover:shadow-md active:bg-[#2c2c3b] active:shadow-inner"
+        type="submit"
+      >
+        {isUpdate ? "수정" : "추가"}
+      </button>
       {isUpdate && (
-        <Button onClick={onDeleteHandler} type="button">
+        <button
+          className="p-3 text-base font-bold text-white bg-[#0a0426] border-none rounded-lg cursor-pointer
+      hover:bg-[#1c1c3b] hover:shadow-md active:bg-[#2c2c3b] active:shadow-inner"
+          onClick={onDeleteHandler}
+          type="button"
+        >
           삭제
-        </Button>
+        </button>
       )}
       {openModal && (
         <Portal>
@@ -164,7 +149,7 @@ export default function DataInputForm() {
           </Modal>
         </Portal>
       )}
-    </Form>
+    </form>
   );
 }
 
