@@ -12,7 +12,7 @@ const useLoginStore = create(
       setUser: (data) => set({ ...data, isLoggedIn: true }),
       clearUser: () =>
         set({
-          isLoggedIn: true,
+          isLoggedIn: false,
           accessToken: "",
           avatar: "",
           nickname: "",
