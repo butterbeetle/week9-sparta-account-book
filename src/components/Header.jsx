@@ -7,7 +7,7 @@ export default function Header() {
         <Link className="text-xl font-bold" to="/">
           가계부
         </Link>
-        <Link to="/auth">로그인</Link>
+        <Link to="/login">로그인</Link>
       </div>
     </header>
   );
