@@ -38,7 +38,8 @@ function LoginPage() {
     try {
       const { data } = await LogIn(loginUserInfo);
       // console.log(data);
-      //TODO Query string(선택) 한번 더 보기
+      localStorage.setItem("token", JSON.stringify(data.accessToken));
+      //TODO https://teamsparta.notion.site/React-5-f1d81428746740e5ae356cf965c737d5 Query string(선택) 한번 더 보기
       toast.createToast({
         id: uuid(),
         title: "Success",
