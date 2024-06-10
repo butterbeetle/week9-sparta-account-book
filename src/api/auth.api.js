@@ -12,7 +12,7 @@ class AuthAPI {
   }
   async logIn(loginUserInfo) {
     const response = await this.#client.post("/login", loginUserInfo);
-    console.log("API LOGIN RESPONSE__", response);
+    // console.log("API LOGIN RESPONSE__", response);
     return response;
   }
   async logOut() {}

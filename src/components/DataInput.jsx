@@ -12,7 +12,7 @@ export default function DataInput({
   const { errorData } = useSelector((state) => state.error);
 
   const onChangeHandler = (value) => {
-    console.log(value);
+    // console.log(value);
     setInputData((prev) => ({
       ...prev,
       [id]: value,

@@ -1,11 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
 import formatDate from "../../utils/formatDate";
 import uuid from "../../utils/uuid";
+import useLoginStore from "../../zustand/login.store";
 
 const initialInputData = {
   date: formatDate(new Date()),
@@ -27,18 +28,18 @@ const loginDatas = [
 
 function LoginPage() {
   const toast = useToast();
+  const nav = useNavigate();
   const { mutateAsync: LogIn } = useMutation({
     mutationFn: (loginUserInfo) => api.auth.logIn(loginUserInfo),
   });
   const [loginUserInfo, setLoginUserInfo] = useState(initialInputData);
+  const setUser = useLoginStore((state) => state.setUser);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     console.log("LOGIN SUBMIT___");
     try {
       const { data } = await LogIn(loginUserInfo);
-      // console.log(data);
-      localStorage.setItem("token", JSON.stringify(data.accessToken));
       //TODO https://teamsparta.notion.site/React-5-f1d81428746740e5ae356cf965c737d5 Query string(선택) 한번 더 보기
       toast.createToast({
         id: uuid(),
@@ -47,6 +48,9 @@ function LoginPage() {
         time: 3000,
         variant: "success",
       });
+
+      setUser(data);
+      nav("/", { replace: true });
     } catch (error) {
       const { code, message, response } = error;
       // console.log("LOGIN ERROR___", code, message, response.data.message);
