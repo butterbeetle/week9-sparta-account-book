@@ -24,10 +24,10 @@ const initialInputData = {
 };
 
 const inputsData = [
-  { id: "date", type: "date", label: "날짜" },
-  { id: "category", type: "text", label: "항목" },
-  { id: "amount", type: "text", label: "금액" },
-  { id: "content", type: "text", label: "내용" },
+  { id: "date", type: "date", label: "날짜", maxLength: 8 },
+  { id: "category", type: "text", label: "항목", maxLength: 8 },
+  { id: "amount", type: "text", label: "금액", maxLength: 8 },
+  { id: "content", type: "text", label: "내용", maxLength: 30 },
 ];
 
 export default function DataInputForm() {
@@ -93,7 +93,7 @@ export default function DataInputForm() {
       className="flex flex-col gap-2 p-2 bg-[#e2e8f0] rounded-2xl"
       onSubmit={onSubmitHandler}
     >
-      {inputsData.map(({ id, type, label }) => (
+      {inputsData.map(({ id, type, label, maxLength }) => (
         <DataInput
           key={id}
           id={id}
@@ -101,6 +101,7 @@ export default function DataInputForm() {
           label={label}
           inputData={inputData[id]}
           setInputData={setInputData}
+          maxLength={maxLength}
         />
       ))}
       <button

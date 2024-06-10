@@ -4,13 +4,15 @@ export default function DataInput({
   id,
   type = "text",
   label,
-  inputData,
+  inputData = "",
   setInputData,
+  minLength,
+  maxLength,
 }) {
   const { errorData } = useSelector((state) => state.error);
-  const maxLength = id === "content" ? 30 : 8;
 
   const onChangeHandler = (value) => {
+    console.log(value);
     setInputData((prev) => ({
       ...prev,
       [id]: value,
@@ -28,6 +30,7 @@ export default function DataInput({
         value={inputData}
         autoFocus={id === "category"}
         placeholder=""
+        minLength={minLength}
         maxLength={maxLength}
         onChange={(e) => onChangeHandler(e.target.value)}
       />
