@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
@@ -25,7 +25,7 @@ const signUpDatas = [
 
 function SignUpPage() {
   const toast = useToast();
-
+  const nav = useNavigate();
   const { mutateAsync: SignUp } = useMutation({
     mutationFn: (data) => api.auth.signUp(data),
   });
@@ -54,6 +54,7 @@ function SignUpPage() {
         time: 3000,
         variant: "success",
       });
+      nav("/login", { replace: true });
     } catch (error) {
       const { code, message } = error;
       // console.log("ERROR___", code, message);
