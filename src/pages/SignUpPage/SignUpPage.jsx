@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../../api/api";
 import DataInput from "../../components/DataInput";
@@ -7,7 +7,7 @@ import { useToast } from "../../context/toast.context";
 import uuid from "../../utils/uuid";
 
 const signUpDatas = [
-  { id: "userId", label: "아이디", minLength: 4, maxLength: 10 },
+  { id: "id", label: "아이디", minLength: 4, maxLength: 10 },
   {
     id: "password",
     type: "password",
@@ -16,7 +16,7 @@ const signUpDatas = [
     maxLength: 15,
   },
   {
-    id: "name",
+    id: "nickname",
     label: "닉네임",
     minLength: 1,
     maxLength: 10,
@@ -25,21 +25,38 @@ const signUpDatas = [
 
 function SignUpPage() {
   const toast = useToast();
-  const toastId = useId();
+
   const { mutateAsync: SignUp } = useMutation({
     mutationFn: (data) => api.auth.signUp(data),
   });
+
   const [inputData, setInputData] = useState({});
 
+  /**
+   * 아이디맨
+   * 123123
+   * 니크네크임
+   */
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("SIGN-UP SUBMIT___");
-    console.log(inputData);
+    // console.log("SIGN-UP SUBMIT___");
+    // console.log(inputData);
     try {
-      await SignUp(inputData);
+      // console.log("SUCCESS___");
+      const {
+        data: { message },
+      } = await SignUp(inputData);
+
+      toast.createToast({
+        id: uuid(),
+        title: "Success",
+        content: message,
+        time: 3000,
+        variant: "success",
+      });
     } catch (error) {
       const { code, message } = error;
-      console.log("ERROR___", code, message);
+      // console.log("ERROR___", code, message);
       toast.createToast({
         id: uuid(),
         title: code,

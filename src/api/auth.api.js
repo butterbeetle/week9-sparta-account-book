@@ -8,6 +8,7 @@ class AuthAPI {
   async signUp(registerUserInfo) {
     const response = await this.#client.post("/register", registerUserInfo);
     console.log("API REGISTER RESPONSE___", response);
+    return response;
   }
   async logIn() {}
   async logOut() {}
