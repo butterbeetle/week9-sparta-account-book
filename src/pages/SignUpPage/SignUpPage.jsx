@@ -38,11 +38,14 @@ function SignUpPage() {
     try {
       await SignUp(inputData);
     } catch (error) {
-      console.log("ERROR___", error, toastId);
+      const { code, message } = error;
+      console.log("ERROR___", code, message);
       toast.createToast({
         id: uuid(),
-        title: "세트스",
-        content: "세테",
+        title: code,
+        content: message,
+        time: 3000,
+        variant: "error",
       });
     }
   };
