@@ -12,7 +12,7 @@ export default function RecordsList() {
   const [sortedDateOrder, setSortedDateOrder] = useState("desc");
   const [sortedAmountOrder, setSortedAmountOrder] = useState("desc");
 
-  console.log(records);
+  // console.log(records);
 
   const dateClickHandler = () => {
     setSortedType("date");
@@ -66,7 +66,7 @@ export default function RecordsList() {
             className="flex flex-col gap-2 max-h-[400px] overflow-y-auto
           p-2 pr-4 "
           >
-            {records.map(
+            {records?.map(
               ({ id, date, category, amount, content, createdBy }) => (
                 <Link key={id} to={`/records/${id}`}>
                   <li
@@ -80,8 +80,8 @@ export default function RecordsList() {
                         <p>{date}</p>
                         <p className="text-xs">(by {createdBy})</p>
                       </div>
-                      <div className="flex font-bold text-[#3c98fd] w-fit max-w-[250px]">
-                        {category}:
+                      <div className="flex font-bold text-[#1a334e] w-fit max-w-[250px] gap-2">
+                        [{category}]
                         <p className="flex-1 line-clamp-1 text-[#3b82f6]">
                           {content}
                         </p>

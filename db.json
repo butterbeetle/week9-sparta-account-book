@@ -1,28 +1,20 @@
 {
   "expenses": [
     {
-      "id": "ca2eeef5-70c5-48a0-b9e9-6b6193a12084",
+      "id": "46869445-5f9c-4650-941f-41bd9457bc07",
       "date": "2024-06-11",
-      "category": "1",
-      "amount": "1",
-      "content": "1",
+      "category": "화성",
+      "amount": "99999",
+      "content": "갈끄니까",
       "createdBy": "내부전재언제나와"
     },
     {
-      "id": "46869445-5f9c-4650-941f-41bd9457bc07",
-      "date": "2024-06-03",
-      "category": "개인사업",
-      "amount": 1000000,
-      "content": "테슬라 모델 3",
-      "createdBy": "Musk"
-    },
-    {
       "id": "a5c0d8de-d060-4d07-9934-29765051a7ea",
-      "date": "2024-06-07",
-      "category": "개인사업",
-      "amount": 1000,
-      "content": "X(구 트위터)",
-      "createdBy": "Musk"
+      "date": "2024-06-11",
+      "category": "트위터",
+      "amount": "30000",
+      "content": "터위트",
+      "createdBy": "내부전재언제나와"
     },
     {
       "id": "0d0a966e-5c35-4bf0-aca4-f2b1265a432d",
@@ -63,6 +55,22 @@
       "amount": 100000,
       "content": "세광양대창",
       "createdBy": "Me"
+    },
+    {
+      "id": "5ec7",
+      "date": "2024-06-11",
+      "category": "1",
+      "amount": "2",
+      "content": "3",
+      "createdBy": "내부전재언제나와"
+    },
+    {
+      "id": "5189",
+      "date": "2024-06-11",
+      "category": "2",
+      "amount": "2",
+      "content": "2",
+      "createdBy": "내부전재언제나와"
     }
   ]
 }

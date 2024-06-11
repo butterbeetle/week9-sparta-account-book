@@ -10,7 +10,8 @@ import {
   updateRecordDataHandler,
 } from "../redux/slices/record.slice";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import useRecord from "../hooks/useRecord";
 import formatDate from "../utils/formatDate";
 import validateInput from "../utils/validateInput";
 import useLoginStore from "../zustand/login.store";
@@ -33,6 +34,7 @@ const inputsData = [
 
 export default function DataInputForm() {
   const { recordId } = useParams();
+  const { createRecord, deleteRecord, updateRecord } = useRecord();
   const nav = useNavigate();
   const nickname = useLoginStore((state) => state.nickname);
 
@@ -43,21 +45,23 @@ export default function DataInputForm() {
 
   const data = useSelector((state) => selectDataById(state, recordId));
 
-  useEffect(() => {
-    if (recordId) {
-      setInputData(data);
-      dispatch(
-        setErrorData({
-          newErrorData: {
-            date: false,
-            category: false,
-            amount: false,
-            content: false,
-          },
-        })
-      );
-    }
-  }, [dispatch, recordId, data]);
+  //TODO 에러로인해 주석처리 대신할 로직짜거나 페이지 나누는게 좋을듯?
+  // useEffect(() => {
+  //   if (recordId) {
+  //     console.log(data);
+  //     setInputData(data);
+  //     dispatch(
+  //       setErrorData({
+  //         newErrorData: {
+  //           date: false,
+  //           category: false,
+  //           amount: false,
+  //           content: false,
+  //         },
+  //       })
+  //     );
+  //   }
+  // }, [dispatch, recordId, data]);
 
   const isUpdate = recordId ?? false;
 
@@ -76,11 +80,13 @@ export default function DataInputForm() {
     }
 
     if (isUpdate) {
+      updateRecord({ id: recordId, ...newInputData });
       dispatch(
         updateRecordDataHandler({ recordId, updatedData: newInputData })
       );
       nav("/", { replace: true });
     } else {
+      createRecord(newInputData);
       dispatch(addRecordDataHandler({ newRecordData: newInputData }));
     }
 
@@ -93,16 +99,17 @@ export default function DataInputForm() {
   };
 
   const onDeleteConfirmHandler = () => {
+    deleteRecord(recordId);
     dispatch(deleteRecordDataHandler({ recordId }));
     nav("/", { replace: true });
   };
-
+  console.log("WHY", inputData);
   return (
     <form
       className="flex flex-col gap-2 p-2 bg-[#e2e8f0] rounded-2xl"
       onSubmit={onSubmitHandler}
     >
-      {inputsData.map(({ id, type, label, maxLength }) => (
+      {inputsData?.map(({ id, type, label, maxLength }) => (
         <DataInput
           key={id}
           id={id}
