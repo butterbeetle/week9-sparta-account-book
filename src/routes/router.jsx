@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
+import UnProtectedRoute from "../components/UnProtectedRoute";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { defaultLayoutLoader } from "../layouts/DefaultLayout.loader";
 import HomePage from "../pages/HomePage/HomePage";
@@ -14,12 +15,17 @@ const router = createBrowserRouter([
     loader: defaultLayoutLoader,
     children: [
       {
-        path: "/login",
-        element: <LoginPage />,
-      },
-      {
-        path: "/signup",
-        element: <SignUpPage />,
+        element: <UnProtectedRoute />,
+        children: [
+          {
+            path: "/login",
+            element: <LoginPage />,
+          },
+          {
+            path: "/signup",
+            element: <SignUpPage />,
+          },
+        ],
       },
       {
         element: <ProtectedRoute />,
