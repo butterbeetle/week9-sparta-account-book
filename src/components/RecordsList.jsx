@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import useRecord from "../hooks/useRecord";
 import formatAmount from "../utils/formatAmount";
 
 export default function RecordsList() {
+  const { records } = useRecord();
   const { selectedMonth, recordsData } = useSelector((state) => state.record);
 
   const [sortedType, setSortedType] = useState("date");
   const [sortedDateOrder, setSortedDateOrder] = useState("desc");
   const [sortedAmountOrder, setSortedAmountOrder] = useState("desc");
+
+  console.log(records);
 
   const dateClickHandler = () => {
     setSortedType("date");
@@ -38,8 +42,6 @@ export default function RecordsList() {
       }
     });
 
-  // console.log(filteredRecordsData);
-
   return (
     <div className="h-full p-3 min-h-[400px] bg-[#e2e8f0] rounded-2xl">
       {filteredRecordsData.length > 0 ? (
@@ -64,18 +66,18 @@ export default function RecordsList() {
             className="flex flex-col gap-2 max-h-[400px] overflow-y-auto
           p-2 pr-4 "
           >
-            {filteredRecordsData.map(
+            {records.map(
               ({ id, date, category, amount, content, createdBy }) => (
                 <Link key={id} to={`/records/${id}`}>
                   <li
-                    className="flex justify-between items-center p-3 rounded-md border-1
+                    className="flex justify-between items-center p-3 rounded-md border-1 text-sm
                    border-[#d1d5db] bg-[#fffafc] shadow-md hover:shadow-lg hover:bg-[#d2dff0] hover:border-[#acb0b6]
                    active:shadow-inner
                   "
                   >
                     <div className="flex relative flex-1 flex-col gap-2 text-[#1f2937]">
                       <div className="flex gap-1 items-baseline font-bold text-[#6b7280]">
-                        <p className="text-sm">{date}</p>
+                        <p>{date}</p>
                         <p className="text-xs">(by {createdBy})</p>
                       </div>
                       <div className="flex font-bold text-[#3c98fd] w-fit max-w-[250px]">
@@ -85,7 +87,9 @@ export default function RecordsList() {
                         </p>
                       </div>
                     </div>
-                    <p className="">{formatAmount(+amount)}</p>
+                    <p className="text-[#3b82f6] font-bold text-xs">
+                      {formatAmount(+amount)}
+                    </p>
                   </li>
                 </Link>
               )

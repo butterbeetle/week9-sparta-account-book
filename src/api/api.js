@@ -2,19 +2,21 @@ import axios from "axios";
 import AuthAPI from "./auth.api";
 import RecordAPI from "./record.api";
 
-const BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+const AUTH_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
+const RECORD_BASE_URL = "http://localhost:5000";
 
 class API {
-  #baseURL = BASE_URL;
-  #client;
+  #authClient;
+  #recordClient;
 
   auth;
   record;
   constructor() {
-    this.#client = axios.create({ baseURL: this.#baseURL });
+    this.#authClient = axios.create({ baseURL: AUTH_BASE_URL });
+    this.#recordClient = axios.create({ baseURL: RECORD_BASE_URL });
 
-    this.auth = new AuthAPI(this.#client);
-    this.record = new RecordAPI(this.#client);
+    this.auth = new AuthAPI(this.#authClient);
+    this.record = new RecordAPI(this.#recordClient);
   }
 }
 const api = new API();
