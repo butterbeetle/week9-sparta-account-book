@@ -17,6 +17,7 @@ class RecordAPI {
     return response.data;
   }
 
+  //TODO 지출 데이터 수정/삭제 의 경우 해당 데이터를 생성한 사람만 가능하도록 합시다.
   async updateRecord(newRecordData) {
     console.log(newRecordData);
     const response = await this.#client.patch(
