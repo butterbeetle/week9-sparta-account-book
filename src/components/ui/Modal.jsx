@@ -7,7 +7,8 @@ export default function Modal({ children, onClose }) {
       }}
     >
       <button
-        className="fixed top-0 right-0 p-3 m-1 text-white bg-[#2c2c2c] rounded-full"
+        className="fixed top-0 right-0 p-3 m-1 size-8 flex items-center justify-center
+         text-white bg-[#2c2c2c] rounded-full"
         onClick={() => onClose()}
       >
         X

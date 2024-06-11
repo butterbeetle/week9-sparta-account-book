@@ -11,15 +11,19 @@ class RecordAPI {
     return response;
   }
 
-  async getRecords() {
-    const response = await this.#client.get("/expenses");
+  async getRecord(recordId) {
+    const response = await this.#client.get(`/expenses/${recordId}`);
     // console.log("RECORD API GET RECORD___", response);
     return response.data;
   }
 
-  //TODO 지출 데이터 수정/삭제 의 경우 해당 데이터를 생성한 사람만 가능하도록 합시다.
+  async getRecords() {
+    const response = await this.#client.get("/expenses");
+    // console.log("RECORD API GET RECORDS___", response);
+    return response.data;
+  }
+
   async updateRecord(newRecordData) {
-    console.log(newRecordData);
     const response = await this.#client.patch(
       `/expenses/${newRecordData.id}`,
       newRecordData

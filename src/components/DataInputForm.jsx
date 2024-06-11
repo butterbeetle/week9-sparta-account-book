@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import styled from "styled-components";
 import DataInput from "../components/DataInput";
 import { resetInputData, setErrorData } from "../redux/slices/error.slice";
 import {
@@ -37,6 +36,7 @@ export default function DataInputForm() {
   const { createRecord, deleteRecord, updateRecord } = useRecord();
   const nav = useNavigate();
   const nickname = useLoginStore((state) => state.nickname);
+  const userId = useLoginStore((state) => state.userId);
 
   const dispatch = useDispatch();
 
@@ -72,6 +72,7 @@ export default function DataInputForm() {
     const newInputData = {
       ...inputData,
       createdBy: nickname,
+      userId,
     };
 
     if (Object.values(validateErrors).some((error) => error)) {
@@ -140,89 +141,40 @@ export default function DataInputForm() {
       {openModal && (
         <Portal>
           <Modal onClose={() => setOpenModal(false)}>
-            <ModalDiv>
-              <ModalTextDiv>정말로 삭제하시겠습니까?</ModalTextDiv>
-              <ModalButtonMainDiv>
-                <ModalButtonDiv>
-                  <ModalButton
+            <div
+              className="flex font-bold flex-col justify-center rounded-md
+            bg-white h-[200px] divide-y-2 divide-solid"
+            >
+              <div className="flex justify-center items-center w-[400px] h-full">
+                정말로 삭제하시겠습니까?
+              </div>
+              <div
+                className="flex justify-center items-center size-full 
+              divide-x-2 divide-solid"
+              >
+                <div className="flex justify-center items-center w-1/2 h-full">
+                  <button
+                    className="size-full hover:bg-gray-100 rounded-bl-md 
+                    active:bg-gray-200 active:shadow-inner"
                     onClick={() => onDeleteConfirmHandler()}
-                    className="size-full"
-                    $left={true}
                   >
                     네
-                  </ModalButton>
-                </ModalButtonDiv>
-                <ModalButtonDiv>
-                  <ModalButton
+                  </button>
+                </div>
+                <div className="flex justify-center items-center w-1/2 h-full">
+                  <button
                     onClick={() => setOpenModal(false)}
-                    className="size-full"
-                    $left={false}
+                    className="size-full hover:bg-gray-100 rounded-br-md 
+                    active:bg-gray-200 active:shadow-inner"
                   >
                     아니요
-                  </ModalButton>
-                </ModalButtonDiv>
-              </ModalButtonMainDiv>
-            </ModalDiv>
+                  </button>
+                </div>
+              </div>
+            </div>
           </Modal>
         </Portal>
       )}
     </form>
   );
 }
-
-const ModalDiv = styled.div`
-  display: flex;
-  font-weight: bold;
-  flex-direction: column;
-  justify-content: center;
-  border-radius: 8px;
-  background-color: #ffffff;
-  height: 200px;
-`;
-
-const ModalTextDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  height: 100%;
-`;
-
-const ModalButtonMainDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  border-top: 2px solid #e5e7eb;
-`;
-
-const ModalButtonDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  height: 100%;
-
-  &:first-child {
-    border-right: 2px solid #e5e7eb;
-  }
-`;
-
-const ModalButton = styled.button`
-  width: 100%;
-  height: 100%;
-  transition: background-color 0.3s;
-
-  border-bottom-left-radius: ${(props) => props.$left && "8px"};
-  border-bottom-right-radius: ${(props) => !props.$left && "8px"};
-
-  &:hover {
-    background-color: #e5e7eb;
-  }
-
-  &:active {
-    color: #ffffff;
-    background-color: #333333;
-  }
-`;

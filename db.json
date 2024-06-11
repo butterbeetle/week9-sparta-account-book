@@ -71,6 +71,32 @@
       "amount": "2",
       "content": "2",
       "createdBy": "내부전재언제나와"
+    },
+    {
+      "id": "2ff5",
+      "date": "2024-06-11",
+      "category": "2",
+      "amount": "2",
+      "content": "2",
+      "createdBy": "힐받으면내남자"
+    },
+    {
+      "id": "521f",
+      "date": "2024-06-11",
+      "category": "테스트",
+      "amount": "100000",
+      "content": "헐투헐투헐",
+      "createdBy": "힐받으면내남자",
+      "userId": ""
+    },
+    {
+      "id": "afae",
+      "date": "2024-06-11",
+      "category": "항목항목",
+      "amount": "10000",
+      "content": "내용",
+      "createdBy": "힐받으면내남자",
+      "userId": ""
     }
   ]
 }
