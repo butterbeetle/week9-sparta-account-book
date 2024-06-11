@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "../layouts/DefaultLayout";
+import { defaultLayoutLoader } from "../layouts/DefaultLayout.loader";
 import HomePage from "../pages/HomePage/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import MyPage from "../pages/MyPage/MyPage";
@@ -9,6 +10,7 @@ import SignUpPage from "../pages/SignUpPage/SignUpPage";
 const router = createBrowserRouter([
   {
     element: <DefaultLayout />,
+    loader: defaultLayoutLoader,
     children: [
       {
         path: "/",

@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
-import useMe from "../hooks/useMe";
+import { useShallow } from "zustand/react/shallow";
 import useLoginStore from "../zustand/login.store";
 
 export default function Header() {
-  const { isLoggedIn, user, isError, isLoading, nickname } = useMe();
+  const { isLoggedIn, nickname } = useLoginStore(
+    useShallow((state) => ({
+      isLoggedIn: state.isLoggedIn,
+      nickname: state.nickname,
+      setUser: state.setUser,
+      clearUser: state.clearUser,
+    }))
+  );
 
   const logOut = useLoginStore((state) => state.clearUser);
   // console.log(user, isError, isLoading);

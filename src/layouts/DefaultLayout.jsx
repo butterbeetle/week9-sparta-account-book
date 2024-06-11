@@ -1,7 +1,14 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import Header from "../components/Header";
+import useLoginStore from "../zustand/login.store";
 
 export default function DefaultLayout() {
+  const userData = useLoaderData();
+  const setUser = useLoginStore((state) => state.setUser);
+  if (userData) {
+    setUser(userData);
+  }
+
   return (
     <>
       <Header />
