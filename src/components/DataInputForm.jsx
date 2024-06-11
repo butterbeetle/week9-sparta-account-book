@@ -103,7 +103,7 @@ export default function DataInputForm() {
     dispatch(deleteRecordDataHandler({ recordId }));
     nav("/", { replace: true });
   };
-  console.log("WHY", inputData);
+  // console.log("WHY", inputData);
   return (
     <form
       className="flex flex-col gap-2 p-2 bg-[#e2e8f0] rounded-2xl"
