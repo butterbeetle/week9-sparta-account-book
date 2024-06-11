@@ -38,7 +38,7 @@ export default function RecordsList() {
       }
     });
 
-  console.log(filteredRecordsData);
+  // console.log(filteredRecordsData);
 
   return (
     <div className="h-full p-3 min-h-[400px] bg-[#e2e8f0] rounded-2xl">

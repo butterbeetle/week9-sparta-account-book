@@ -13,7 +13,7 @@ export const defaultLayoutLoader = async () => {
     // console.log(response);
     return response.data;
   } catch (error) {
-    console.error("Load Data Failed___", error);
-    throw error;
+    // console.error("Load Data Failed___", error);
+    return error.response;
   }
 };
