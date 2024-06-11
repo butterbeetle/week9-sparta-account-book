@@ -6,13 +6,15 @@ const useLoginStore = create((set) => ({
   nickname: "",
   userId: "",
   setUser: (data) => set({ ...data, isLoggedIn: true }),
-  clearUser: () =>
+  clearUser: () => {
+    localStorage.clear();
     set({
       isLoggedIn: false,
       avatar: "",
       nickname: "",
       userId: "",
-    }),
+    });
+  },
 }));
 
 export default useLoginStore;

@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import useMe from "../hooks/useMe";
 import useLoginStore from "../zustand/login.store";
 
 export default function Header() {
-  const isLoggedIn = useLoginStore((state) => state.isLoggedIn);
-  const nickname = useLoginStore((state) => state.nickname);
-  const logOut = useLoginStore((state) => state.clearUser);
+  const { isLoggedIn, user, isError, isLoading, nickname } = useMe();
 
+  const logOut = useLoginStore((state) => state.clearUser);
+  // console.log(user, isError, isLoading);
   return (
     <header className="border-b-2 p-3 bg-[#e6eef8] select-none h-14 ">
       <div className="max-w-[1080px] flex justify-between mx-auto items-center">

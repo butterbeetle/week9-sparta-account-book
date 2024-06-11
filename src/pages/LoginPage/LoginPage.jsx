@@ -37,7 +37,7 @@ function LoginPage() {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
-    console.log("LOGIN SUBMIT___");
+    // console.log("LOGIN SUBMIT___");
     try {
       const { data } = await LogIn(loginUserInfo);
       localStorage.setItem("token", JSON.stringify(data.accessToken));

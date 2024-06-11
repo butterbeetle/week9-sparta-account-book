@@ -8,6 +8,7 @@ function MyPage() {
   bg-[#e2e8f0]"
     >
       <h1 className="text-2xl font-bold">내 프로필</h1>
+      <div className="border-2 border-red-500 size-full">dd</div>
       <p>{nickname}</p>
     </div>
   );
