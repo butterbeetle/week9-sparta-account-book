@@ -27,7 +27,17 @@ class AuthAPI {
 
     return response;
   }
-  async updateUserInfo() {}
+
+  async updateUserInfo(accessToken, updatedUserInfo) {
+    console.log(accessToken, updatedUserInfo);
+    const response = await this.#client.patch("/profile", updatedUserInfo, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("API UPDATE USER INFO RESPONSE__", response);
+  }
 }
 
 export default AuthAPI;

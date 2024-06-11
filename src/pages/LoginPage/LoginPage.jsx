@@ -54,7 +54,7 @@ function LoginPage() {
       nav("/", { replace: true });
     } catch (error) {
       const { code, message, response } = error;
-      // console.log("LOGIN ERROR___", code, message, response.data.message);
+      console.log("LOGIN ERROR___", code, message, response.data.message);
       toast.createToast({
         id: uuid(),
         title: code,

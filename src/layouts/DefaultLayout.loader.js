@@ -7,9 +7,10 @@ export const defaultLayoutLoader = async () => {
   if (!accessToken) {
     return null;
   }
-
+  // console.log("LOADER TOKEN___", accessToken);
   try {
     const response = await api.auth.getUserInfo(accessToken);
+    // console.log(response);
     return response.data;
   } catch (error) {
     console.error("Load Data Failed___", error);

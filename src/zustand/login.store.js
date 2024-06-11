@@ -7,7 +7,7 @@ const useLoginStore = create((set) => ({
   userId: "",
   setUser: (data) => set({ ...data, isLoggedIn: true }),
   clearUser: () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
     set({
       isLoggedIn: false,
       avatar: "",

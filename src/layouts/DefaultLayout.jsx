@@ -3,9 +3,11 @@ import Header from "../components/Header";
 import useLoginStore from "../zustand/login.store";
 
 export default function DefaultLayout() {
+  const tokenString = localStorage.getItem("token");
   const userData = useLoaderData();
   const setUser = useLoginStore((state) => state.setUser);
-  if (userData) {
+  if (tokenString && userData) {
+    // console.log("DEFAULT LAYOUT___", userData);
     setUser(userData);
   }
 
