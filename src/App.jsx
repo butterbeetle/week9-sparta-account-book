@@ -27,7 +27,7 @@ export default function App() {
 
   if (isLoading) {
     return (
-      <div className="size-full flex items-center justify-center">
+      <div className="size-full flex items-center justify-center text-9xl font-bold">
         Loading...
       </div>
     );

@@ -6,13 +6,14 @@ export default function Header() {
   const nickname = useLoginStore((state) => state.nickname);
   const logOut = useLoginStore((state) => state.clearUser);
 
-  //TODO https://teamsparta.notion.site/React-5-f1d81428746740e5ae356cf965c737d5 헤더네비게잇
   return (
-    <header className="border-b-2 p-3 bg-[#e6eef8] select-none">
+    <header className="border-b-2 p-3 bg-[#e6eef8] select-none h-14 ">
       <div className="max-w-[1080px] flex justify-between mx-auto items-center">
-        <Link className="text-xl font-bold" to="/">
-          가계부
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link className="text-xl font-bold" to="/">
+            가계부
+          </Link>
+        </div>
         {!isLoggedIn && (
           <Link
             className="border-2 p-1 cursor-pointer text-xs
@@ -25,12 +26,18 @@ export default function Header() {
         )}
         {isLoggedIn && (
           <div className="flex text-xs gap-2 items-center">
-            <img
-              className="rounded-full size-8"
-              src="http://via.placeholder.com/640x480"
-              alt="profile"
-            ></img>
-            <p className="font-bold">{nickname}</p>
+            <Link to="/my">
+              <img
+                className="rounded-full size-8 hover:shadow-md"
+                src="http://via.placeholder.com/640x480"
+                alt="profile"
+              ></img>
+            </Link>
+            <Link to="/my">
+              <p className="font-bold hover:underline cursor-pointer">
+                {nickname}
+              </p>
+            </Link>
             <div
               onClick={logOut}
               className="border-2 p-1 cursor-pointer 
