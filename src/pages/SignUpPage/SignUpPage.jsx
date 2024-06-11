@@ -1,10 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
-import uuid from "../../utils/uuid";
 
 const signUpDatas = [
   { id: "id", label: "아이디", minLength: 4, maxLength: 10 },
@@ -48,7 +48,7 @@ function SignUpPage() {
       } = await SignUp(inputData);
 
       toast.createToast({
-        id: uuid(),
+        id: uuidv4(),
         title: "Success",
         content: message,
         time: 3000,
@@ -59,7 +59,7 @@ function SignUpPage() {
       const { code, message, response } = error;
       console.log("SIGN UP ERROR___", code, message, response.data.message);
       toast.createToast({
-        id: uuid(),
+        id: uuidv4(),
         title: code,
         content: response.data.message,
         time: 3000,

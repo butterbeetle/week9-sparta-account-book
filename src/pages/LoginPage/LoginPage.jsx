@@ -1,11 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
 import formatDate from "../../utils/formatDate";
-import uuid from "../../utils/uuid";
 import useLoginStore from "../../zustand/login.store";
 
 const initialInputData = {
@@ -41,9 +41,8 @@ function LoginPage() {
     try {
       const { data } = await LogIn(loginUserInfo);
       localStorage.setItem("token", JSON.stringify(data.accessToken));
-      //TODO https://teamsparta.notion.site/React-5-f1d81428746740e5ae356cf965c737d5 Query string(선택) 한번 더 보기
       toast.createToast({
-        id: uuid(),
+        id: uuidv4(),
         title: "Success",
         content: "로그인에 성공하였습니다.",
         time: 3000,
@@ -56,7 +55,7 @@ function LoginPage() {
       const { code, message, response } = error;
       console.log("LOGIN ERROR___", code, message, response.data.message);
       toast.createToast({
-        id: uuid(),
+        id: uuidv4(),
         title: code,
         content: response.data.message,
         time: 3000,

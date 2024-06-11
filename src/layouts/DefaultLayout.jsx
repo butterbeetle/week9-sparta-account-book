@@ -16,7 +16,7 @@ export default function DefaultLayout() {
       localStorage.removeItem("token");
       nav("/login", { replace: true });
     } else if (accessToken && userData) {
-      setUser(userData);
+      setUser({ ...userData, userId: userData.id });
     }
   }, [userData, accessToken, setUser, nav]);
 

@@ -4,6 +4,7 @@ import PublicRoute from "../components/PublicRoute";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { defaultLayoutLoader } from "../layouts/DefaultLayout.loader";
 import HomePage from "../pages/HomePage/HomePage";
+import homePageLoader from "../pages/HomePage/HomePage.loader";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import MyPage from "../pages/MyPage/MyPage";
 import RecordDetailPage from "../pages/RecordDetailPage/RecordDetailPage";
@@ -34,6 +35,7 @@ const router = createBrowserRouter([
           {
             path: "/",
             element: <HomePage />,
+            loader: homePageLoader,
           },
           {
             path: "/my",

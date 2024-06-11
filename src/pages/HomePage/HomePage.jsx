@@ -1,12 +1,12 @@
 import Calendar from "../../components/Calendar";
-import DataInputForm from "../../components/DataInputForm";
+import CreateRecordData from "../../components/CreateRecordData";
 import RecordsList from "../../components/RecordsList";
 import TotalOutlay from "../../components/TotalOutlay";
 
 export default function HomePage() {
   return (
     <>
-      <DataInputForm />
+      <CreateRecordData />
       <Calendar />
       <TotalOutlay />
       <RecordsList />
