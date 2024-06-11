@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import ProtectedRoute from "../components/ProtectedRoute";
 import DefaultLayout from "../layouts/DefaultLayout";
 import { defaultLayoutLoader } from "../layouts/DefaultLayout.loader";
 import HomePage from "../pages/HomePage/HomePage";
@@ -13,10 +14,6 @@ const router = createBrowserRouter([
     loader: defaultLayoutLoader,
     children: [
       {
-        path: "/",
-        element: <HomePage />,
-      },
-      {
         path: "/login",
         element: <LoginPage />,
       },
@@ -25,12 +22,21 @@ const router = createBrowserRouter([
         element: <SignUpPage />,
       },
       {
-        path: "/my",
-        element: <MyPage />,
-      },
-      {
-        path: "/records/:recordId",
-        element: <RecordDetailPage />,
+        element: <ProtectedRoute />,
+        children: [
+          {
+            path: "/",
+            element: <HomePage />,
+          },
+          {
+            path: "/my",
+            element: <MyPage />,
+          },
+          {
+            path: "/records/:recordId",
+            element: <RecordDetailPage />,
+          },
+        ],
       },
     ],
   },

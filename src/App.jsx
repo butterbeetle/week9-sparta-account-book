@@ -12,13 +12,13 @@ const persistor = persistStore(store);
 export default function App() {
   return (
     <QueryProvider>
-      <ToastContextProvider>
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <ToastContextProvider>
             <RouterProvider router={router} />
-          </PersistGate>
-        </Provider>
-      </ToastContextProvider>
+          </ToastContextProvider>
+        </PersistGate>
+      </Provider>
     </QueryProvider>
   );
 }
