@@ -23,13 +23,13 @@ class RecordAPI {
       `/expenses/${newRecordData.id}`,
       newRecordData
     );
-    console.log("RECORD API UPDATE RECORD___", response);
+    // console.log("RECORD API UPDATE RECORD___", response);
     return response.data;
   }
 
   async deleteRecord(deletedRecordId) {
     const response = await this.#client.delete(`/expenses/${deletedRecordId}`);
-    console.log("RECORD API DELETE RECORD___", response);
+    // console.log("RECORD API DELETE RECORD___", response);
     return response.data;
   }
 }
