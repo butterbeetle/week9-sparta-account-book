@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import formatDate from "../utils/formatDate";
 import validateInput from "../utils/validateInput";
+import useLoginStore from "../zustand/login.store";
 import Modal from "./ui/Modal";
 import Portal from "./ui/Portal";
 
@@ -33,6 +34,7 @@ const inputsData = [
 export default function DataInputForm() {
   const { recordId } = useParams();
   const nav = useNavigate();
+  const nickname = useLoginStore((state) => state.nickname);
 
   const dispatch = useDispatch();
 
@@ -63,16 +65,23 @@ export default function DataInputForm() {
     e.preventDefault();
     const validateErrors = validateInput(inputData);
 
+    const newInputData = {
+      ...inputData,
+      createdBy: nickname,
+    };
+
     if (Object.values(validateErrors).some((error) => error)) {
       dispatch(setErrorData({ newErrorData: validateErrors }));
       return;
     }
 
     if (isUpdate) {
-      dispatch(updateRecordDataHandler({ recordId, updatedData: inputData }));
+      dispatch(
+        updateRecordDataHandler({ recordId, updatedData: newInputData })
+      );
       nav("/", { replace: true });
     } else {
-      dispatch(addRecordDataHandler({ newRecordData: inputData }));
+      dispatch(addRecordDataHandler({ newRecordData: newInputData }));
     }
 
     setInputData(initialInputData);

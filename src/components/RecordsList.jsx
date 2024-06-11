@@ -1,130 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import formatAmount from "../utils/formatAmount";
-
-const RecordsListMainDiv = styled.div`
-  height: 100%;
-  padding: 12px;
-  min-height: 400px;
-  background-color: #e2e8f0;
-  border-radius: 16px;
-`;
-
-const ListUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 400px;
-  overflow-y: auto;
-  padding-right: 16px;
-
-  &::-webkit-scrollbar {
-    width: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background-color: #575757;
-    border-radius: 16px;
-    border: 0 solid transparent;
-    background-clip: content-box;
-  }
-  &::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-    border-radius: 16px;
-  }
-`;
-
-const ListLi = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
-  background-color: #fffafc;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 3px;
-
-  &:hover {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 12px 14px;
-    background-color: #d2dff0;
-    border: 1px solid #acb0b6;
-  }
-`;
-
-const ContentDiv = styled.div`
-  display: flex;
-  position: relative;
-  flex: 1;
-  flex-direction: column;
-  gap: 8px;
-  color: #1f2937;
-`;
-
-const DateParagraph = styled.p`
-  color: #6b7280;
-  font-size: 1rem;
-  font-weight: bold;
-`;
-
-const CategoryDiv = styled.div`
-  display: flex;
-  font-size: 1rem;
-  font-weight: bold;
-  color: #3c98fd;
-  width: fit-content;
-  max-width: 250px;
-`;
-
-const ContentParagraph = styled.p`
-  flex: 1;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #3b82f6;
-`;
-
-const AmountParagraph = styled.p`
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #3b82f6;
-`;
-
-const NoCost = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 400px;
-  font-weight: bold;
-  font-size: 32px;
-`;
-
-const SortedDiv = styled.div`
-  display: flex;
-  gap: 6px;
-  justify-content: flex-end;
-  padding: 0 32px 6px 0;
-`;
-
-const SortedButton = styled.button`
-  font-size: 12px;
-  padding: 2px 4px;
-  font-weight: bold;
-  color: #6b7280;
-  background-color: #fffafc;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #d2dff0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  }
-
-  &:active {
-    background-color: #a9bbd3;
-  }
-`;
 
 export default function RecordsList() {
   const { selectedMonth, recordsData } = useSelector((state) => state.record);
@@ -161,40 +38,65 @@ export default function RecordsList() {
       }
     });
 
+  console.log(filteredRecordsData);
+
   return (
-    <RecordsListMainDiv>
+    <div className="h-full p-3 min-h-[400px] bg-[#e2e8f0] rounded-2xl">
       {filteredRecordsData.length > 0 ? (
         <div>
-          <SortedDiv>
-            <SortedButton onClick={() => dateClickHandler()}>
+          <div className="flex gap-2 justify-end p-0  pb-2">
+            <button
+              className="text-sm px-1 py-[2px] font-bold text-[#6b7280] bg-[#fffafc] border-none rounded-md
+            cursor-pointer hover:bg-[#d2dff0] hover:shadow-md active:bg-[#a9bbd3] active:shadow-inner"
+              onClick={() => dateClickHandler()}
+            >
               날짜순{sortedDateOrder === "desc" ? "▲" : "▼"}
-            </SortedButton>
-            <SortedButton onClick={() => amountClickHandler()}>
+            </button>
+            <button
+              className="text-sm px-1 py-[2px] font-bold text-[#6b7280] bg-[#fffafc] border-none rounded-md
+            cursor-pointer hover:bg-[#d2dff0] hover:shadow-md active:bg-[#a9bbd3] active:shadow-inner"
+              onClick={() => amountClickHandler()}
+            >
               가격순{sortedAmountOrder === "desc" ? "▲" : "▼"}
-            </SortedButton>
-          </SortedDiv>
-          <ListUl>
+            </button>
+          </div>
+          <ul
+            className="flex flex-col gap-2 max-h-[400px] overflow-y-auto
+          p-2 pr-4 "
+          >
             {filteredRecordsData.map(
-              ({ id, date, category, amount, content }) => (
+              ({ id, date, category, amount, content, createdBy }) => (
                 <Link key={id} to={`/records/${id}`}>
-                  <ListLi>
-                    <ContentDiv>
-                      <DateParagraph>{date}</DateParagraph>
-                      <CategoryDiv>
+                  <li
+                    className="flex justify-between items-center p-3 rounded-md border-1
+                   border-[#d1d5db] bg-[#fffafc] shadow-md hover:shadow-lg hover:bg-[#d2dff0] hover:border-[#acb0b6]
+                   active:shadow-inner
+                  "
+                  >
+                    <div className="flex relative flex-1 flex-col gap-2 text-[#1f2937]">
+                      <div className="flex gap-1 items-baseline font-bold text-[#6b7280]">
+                        <p className="text-sm">{date}</p>
+                        <p className="text-xs">(by {createdBy})</p>
+                      </div>
+                      <div className="flex font-bold text-[#3c98fd] w-fit max-w-[250px]">
                         {category}:
-                        <ContentParagraph>{content}</ContentParagraph>
-                      </CategoryDiv>
-                    </ContentDiv>
-                    <AmountParagraph>{formatAmount(+amount)}</AmountParagraph>
-                  </ListLi>
+                        <p className="flex-1 line-clamp-1 text-[#3b82f6]">
+                          {content}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="">{formatAmount(+amount)}</p>
+                  </li>
                 </Link>
               )
             )}
-          </ListUl>
+          </ul>
         </div>
       ) : (
-        <NoCost>지출이 없습니다.</NoCost>
+        <div className="flex justify-center items-center h-[400px] font-bold text-3xl">
+          지출이 없습니다.
+        </div>
       )}
-    </RecordsListMainDiv>
+    </div>
   );
 }
