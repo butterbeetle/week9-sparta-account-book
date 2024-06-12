@@ -35,7 +35,7 @@ export default function RecordDetailPage() {
 
   const inputRef = useRef([]);
 
-  const updateRecordDataHandler = () => {
+  const updateRecordDataHandler = async () => {
     // console.log("RECORD DETAIL UPDATE___");
     const category = inputRef.current[1].value;
     const amount = inputRef.current[2].value;
@@ -106,31 +106,51 @@ export default function RecordDetailPage() {
       content: inputRef.current[3].value,
     };
 
-    // console.log(newRecordData);
-    // const validateErrors = validateInput(inputData);
-
-    // const newInputData = {
-    //   ...inputData,
-    //   createdBy: nickname,
-    // };
-
-    // if (Object.values(validateErrors).some((error) => error)) {
-    //   dispatch(setErrorData({ newErrorData: validateErrors }));
-    //   return;
-    // }
-
-    // if (isUpdate) {
-    //TODO input data 유효성 검사 해야함
-    //TODO 에러 처리 생각
-    updateRecord(newRecordData);
-    nav("/", { replace: true });
+    try {
+      const response = await updateRecord(newRecordData);
+      // console.log("UPDATE RECORD DATA RESPONSE___", response);
+      toast.createToast({
+        id: uuidv4(),
+        title: "SUCCESS",
+        content: "지출 수정에 성공했습니다!!",
+        time: 3000,
+        variant: "success",
+      });
+      nav("/", { replace: true });
+    } catch (error) {
+      // console.log("UPDATE RECORD DATA ERROR___", error);
+      toast.createToast({
+        id: uuidv4(),
+        title: "FAILED",
+        content: "미지의 존재가 수정을 방해했습니다..",
+        time: 3000,
+        variant: "error",
+      });
+    }
   };
 
   const deleteRecordDataHandler = () => {
     // console.log("RECORD DETAIL DELETE___");
-    //TODO 에러 처리 생각
-    deleteRecord(recordId);
-    nav("/", { replace: true });
+    try {
+      deleteRecord(recordId);
+      toast.createToast({
+        id: uuidv4(),
+        title: "SUCCESS",
+        content: "지출 데이터를 삭제했습니다!!",
+        time: 3000,
+        variant: "success",
+      });
+      nav("/", { replace: true });
+    } catch (error) {
+      // console.log("RECORD DETAIL DELETE ERROR___",error);
+      toast.createToast({
+        id: uuidv4(),
+        title: "FAILED",
+        content: "미지의 존재가 삭제를 방해했습니다..",
+        time: 3000,
+        variant: "error",
+      });
+    }
   };
 
   return (
