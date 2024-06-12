@@ -1,7 +1,9 @@
 import { useId, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 import Modal from "../../components/ui/Modal";
 import Portal from "../../components/ui/Portal";
+import { useToast } from "../../context/toast.context";
 import useMe from "../../hooks/useMe";
 import useRecord from "../../hooks/useRecord";
 
@@ -10,6 +12,7 @@ export default function RecordDetailPage() {
   const nav = useNavigate();
   // 커스텀 후끄
   const { deleteRecord, updateRecord } = useRecord();
+  const toast = useToast();
 
   // zustand에 저장되어있는 유저 데이터
   const { user } = useMe();
@@ -34,6 +37,65 @@ export default function RecordDetailPage() {
 
   const updateRecordDataHandler = () => {
     // console.log("RECORD DETAIL UPDATE___");
+    const category = inputRef.current[1].value;
+    const amount = inputRef.current[2].value;
+    const content = inputRef.current[3].value;
+
+    if (!category || !amount || !content) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "무언가 비어있습니다.",
+        content: "항목, 금액, 내용은 필수 사항 입니다!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (category.length > 6) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "항목을 확인해주세요.",
+        content: "항목은 6자내로 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (isNaN(amount) || +amount < 0) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "금액을 확인해주세요.",
+        content: "올바른 금액을 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (+amount > 1e10) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "금액을 확인해주세요.",
+        content: "이렇게 많은 돈을 사용했을리가 없잖아..!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (content.length > 30) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "내용을 확인해주세요.",
+        content: "내용은 30자내로 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
     const newRecordData = {
       id: recordId,
       userId: user.userId,
@@ -43,6 +105,7 @@ export default function RecordDetailPage() {
       amount: inputRef.current[2].value,
       content: inputRef.current[3].value,
     };
+
     // console.log(newRecordData);
     // const validateErrors = validateInput(inputData);
 
