@@ -27,6 +27,10 @@ export default function useMe() {
     queryFn: () => api.auth.getUserInfo(accessToken),
     enabled: !!accessToken,
     retry: false,
+    refetchInterval: 1000 * 60 * 10,
+    // refetchOnMount: false,
+    // refetchOnWindowFocus: false,
+    // refetchOnReconnect: false,
   });
 
   const { mutateAsync: signUp } = useMutation({
@@ -46,18 +50,18 @@ export default function useMe() {
   useEffect(() => {
     if (isSuccess) {
       logInUser(userInfo.data);
-    }
-
-    if (!accessToken || isError) {
+    } else if (isError) {
       logOutUser();
     }
-  }, [isSuccess, logInUser, isError, logOutUser, userInfo, accessToken]);
+  }, [isError, logOutUser, accessToken, isSuccess, logInUser, userInfo]);
 
   return {
     userInfo,
     logIn,
     signUp,
     updatedUserInfo,
+    isSuccess,
+    isError,
 
     user,
     isLoggedIn,

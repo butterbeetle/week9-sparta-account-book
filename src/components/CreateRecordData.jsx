@@ -11,8 +11,8 @@ export default function CreateRecordData() {
   const toast = useToast();
 
   // zustand에 저장되어있는 유저 데이터
-  const { user } = useMe();
-
+  const { user, isError } = useMe();
+  // console.log("ISIS ERROR", isError);
   // Id 설정
   const dateId = useId();
   const categoryId = useId();

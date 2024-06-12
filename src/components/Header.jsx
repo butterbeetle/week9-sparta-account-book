@@ -4,11 +4,6 @@ import useMe from "../hooks/useMe";
 export default function Header() {
   const { userInfo, isLoggedIn, logOutUser } = useMe();
 
-  const logOutHandler = () => {
-    // console.log("LOGOUT___");
-    logOutUser();
-  };
-
   return (
     <header className="border-b-2 p-3 bg-[#e6eef8] select-none h-14 ">
       <div className="max-w-[1080px] flex justify-between mx-auto items-center">
@@ -46,7 +41,7 @@ export default function Header() {
               </p>
             </Link>
             <div
-              onClick={() => logOutHandler()}
+              onClick={logOutUser}
               className="border-2 p-1 cursor-pointer 
             bg-[#1f4e78] hover:bg-[#336fa2] hover:shadow-md active:bg-[#163a5d]
              text-white rounded-md"

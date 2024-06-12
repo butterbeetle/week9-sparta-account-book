@@ -39,7 +39,7 @@ function MyPage() {
       });
       nav("/");
     } catch (error) {
-      console.log("MY PAGE UPDATE ERROR___", error);
+      // console.log("MY PAGE UPDATE ERROR___", error);
       if (error.response.status == 401) {
         toast.createToast({
           id: uuidv4(),
