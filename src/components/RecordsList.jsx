@@ -23,8 +23,6 @@ export default function RecordsList() {
     setSortedAmountOrder((prev) => (prev === "asc" ? "desc" : "asc"));
   };
 
-  //TODO 정렬기능 다시하기
-
   const filteredRecordsData = recordDatasByMonth
     .filter(({ date }) => +date.split("-")[1] === +month)
     .sort((a, b) => {

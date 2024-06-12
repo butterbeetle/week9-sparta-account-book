@@ -6,7 +6,6 @@ import store from "./redux/store/store";
 import router from "./routes/router";
 
 const persistor = persistStore(store);
-//TODO Tailwindcss로 전부 변경하기
 //TODO accessToken 로그아웃...?
 //TODO 로그인 정보 zustand...?
 export default function App() {
