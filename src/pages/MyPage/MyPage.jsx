@@ -25,10 +25,10 @@ function MyPage() {
 
   const onClickHandler = async () => {
     try {
-      const token = JSON.parse(localStorage.getItem("token"));
+      const accessToken = JSON.parse(localStorage.getItem("token"));
       await updatedUserInfo({
-        token,
-        data: { avatar: file, nickname: inputRef.current.value },
+        accessToken,
+        updatedUserInfo: { avatar: file, nickname: inputRef.current.value },
       });
       toast.createToast({
         id: uuidv4(),
