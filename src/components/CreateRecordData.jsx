@@ -1,5 +1,6 @@
 import { useId, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { useToast } from "../context/toast.context";
 import useMe from "../hooks/useMe";
 import useRecord from "../hooks/useRecord";
 import formatDate from "../utils/formatDate";
@@ -7,6 +8,7 @@ import formatDate from "../utils/formatDate";
 export default function CreateRecordData() {
   // 커스텀 후끄
   const { createRecord } = useRecord();
+  const toast = useToast();
 
   // zustand에 저장되어있는 유저 데이터
   const { user } = useMe();
@@ -21,18 +23,75 @@ export default function CreateRecordData() {
 
   const createRecordDataHandler = () => {
     // console.log("HOME CREATE RECORD___");
-    //TODO 유효성 검사 해야함
+
+    const category = inputRef.current[1].value;
+    const amount = inputRef.current[2].value;
+    const content = inputRef.current[3].value;
+
+    if (!category || !amount || !content) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "무언가 비어있습니다.",
+        content: "항목, 금액, 내용은 필수 사항 입니다!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (category.length > 6) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "항목을 확인해주세요.",
+        content: "항목은 6자내로 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (isNaN(amount) || +amount < 0) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "금액을 확인해주세요.",
+        content: "올바른 금액을 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (+amount > 1e10) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "금액을 확인해주세요.",
+        content: "이렇게 많은 돈을 사용했을리가 없잖아..!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
+    if (content.length > 30) {
+      toast.createToast({
+        id: uuidv4(),
+        title: "내용을 확인해주세요.",
+        content: "내용은 30자내로 입력해주세요!!",
+        time: 3000,
+        variant: "error",
+      });
+      return null;
+    }
+
     const newRecordData = {
       id: uuidv4(),
       userId: user.id,
       createdBy: user.nickname,
       date: inputRef.current[0].value,
-      category: inputRef.current[1].value,
-      amount: inputRef.current[2].value,
-      content: inputRef.current[3].value,
+      category,
+      amount,
+      content,
     };
-    // console.log(newRecordData);
-    // const validateErrors = validateInput(inputData);
 
     //TODO 에러 처리 생각
     createRecord(newRecordData);
@@ -55,6 +114,7 @@ export default function CreateRecordData() {
           id={dateId}
           defaultValue={formatDate(new Date(), "full")}
           type="date"
+          onKeyDown={(e) => e.preventDefault()}
         />
         <label
           className="absolute top-4 left-6 text-base select-none text-[#a1a1aa] cursor-text
