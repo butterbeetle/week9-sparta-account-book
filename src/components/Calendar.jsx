@@ -15,9 +15,9 @@ export default function Calendar() {
               active:bg-[#d2dff0]
               active:shadow-inner`,
               {
-                "bg-[#d2dff0]": +selectedMonth === +month,
-                "text-gray-500": +selectedMonth === +month,
-                "shadow-inner": +selectedMonth === +month,
+                "bg-[#c3d5ec]": +selectedMonth == +month,
+                "text-gray-500": +selectedMonth == +month,
+                "shadow-[inset_0_2px_4px_black]": +selectedMonth == +month,
               }
             )}
             key={month}
