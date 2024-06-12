@@ -1,40 +1,22 @@
 {
   "expenses": [
     {
-      "id": "a7d902ad-911d-4f7f-bb74-e12bb50e1e44",
-      "userId": "느타리버섯맨",
-      "createdBy": "리랜더링안된다",
-      "date": "2024-06-11",
-      "category": "느타리",
-      "amount": "999",
-      "content": "냄냄"
-    },
-    {
       "id": "ba5e796b-646f-4993-975f-db351a6e3dd8",
       "userId": "느타리버섯맨",
-      "createdBy": "힐받으면내남자",
+      "createdBy": "변한건없니",
       "date": "2024-06-11",
       "category": "항목",
-      "amount": "393",
+      "amount": "400",
       "content": "내용"
     },
     {
       "id": "86a7d5f0-fe02-48e7-bb75-d136c73c4146",
       "userId": "느타리버섯맨",
-      "createdBy": "리랜더링안된다",
+      "createdBy": "변한건없니",
       "date": "2024-06-12",
       "category": "버섯맨",
-      "amount": "1000",
+      "amount": "100",
       "content": "느타리"
-    },
-    {
-      "id": "6589cbda-5002-4323-b4b3-bba94e1ce408",
-      "userId": "느타리버섯맨",
-      "createdBy": "과연",
-      "date": "2024-06-12",
-      "category": "과연22",
-      "amount": "22",
-      "content": "22"
     },
     {
       "id": "9de10d41-f113-447c-875c-e6de10264a5f",
@@ -42,8 +24,17 @@
       "createdBy": "변한건없니",
       "date": "2024-06-12",
       "category": "느타리맨",
-      "amount": "123",
+      "amount": "345",
       "content": "111"
+    },
+    {
+      "id": "063b27c5-ee9d-4087-b60a-8c06e2ef9ab9",
+      "userId": "느타리버섯맨",
+      "createdBy": "변한건없니",
+      "date": "2024-05-15",
+      "category": "1",
+      "amount": "1",
+      "content": "1"
     }
   ]
 }

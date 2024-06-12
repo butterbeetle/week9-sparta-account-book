@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import useRecord from "../hooks/useRecord";
 import formatAmount from "../utils/formatAmount";
 
 export default function RecordsList() {
   // const records = useLoaderData();
-  const { records } = useRecord();
-  const { selectedMonth, recordsData } = useSelector((state) => state.record);
+  const { records, recordDatasByMonth, month } = useRecord();
 
   const [sortedType, setSortedType] = useState("date");
   const [sortedDateOrder, setSortedDateOrder] = useState("desc");
@@ -26,27 +24,28 @@ export default function RecordsList() {
   };
 
   //TODO 정렬기능 다시하기
-  // const filteredRecordsData = records
-  //   .filter(({ date }) => +date.split("-")[1] === +selectedMonth)
-  //   .sort((a, b) => {
-  //     if (sortedType === "date") {
-  //       if (sortedDateOrder === "desc") {
-  //         return new Date(a.date) - new Date(b.date);
-  //       } else {
-  //         return new Date(b.date) - new Date(a.date);
-  //       }
-  //     } else {
-  //       if (sortedAmountOrder === "desc") {
-  //         return a.amount - b.amount;
-  //       } else {
-  //         return b.amount - a.amount;
-  //       }
-  //     }
-  //   });
+
+  const filteredRecordsData = recordDatasByMonth
+    .filter(({ date }) => +date.split("-")[1] === +month)
+    .sort((a, b) => {
+      if (sortedType === "date") {
+        if (sortedDateOrder === "desc") {
+          return new Date(a.date) - new Date(b.date);
+        } else {
+          return new Date(b.date) - new Date(a.date);
+        }
+      } else {
+        if (sortedAmountOrder === "desc") {
+          return a.amount - b.amount;
+        } else {
+          return b.amount - a.amount;
+        }
+      }
+    });
 
   return (
     <div className="h-full p-3 min-h-[400px] bg-[#e2e8f0] rounded-2xl">
-      {records?.length > 0 ? (
+      {filteredRecordsData?.length > 0 ? (
         <div>
           <div className="flex gap-2 justify-end p-0  pb-2">
             <button
@@ -68,7 +67,7 @@ export default function RecordsList() {
             className="flex flex-col gap-2 max-h-[400px] overflow-y-auto
           p-2 pr-4 "
           >
-            {records.map(
+            {filteredRecordsData.map(
               ({ id, date, category, amount, content, createdBy }) => (
                 <Link key={id} to={`/records/${id}`}>
                   <li

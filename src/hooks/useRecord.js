@@ -1,8 +1,18 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useShallow } from "zustand/react/shallow";
 import api from "../api/api";
+import useRecordStore from "../zustand/record.store";
 
 export default function useRecord() {
   const queryClient = useQueryClient();
+  let recordDatasByMonth = [];
+
+  const { month, selectMonth } = useRecordStore(
+    useShallow((state) => ({
+      month: state.month,
+      selectMonth: state.selectMonth,
+    }))
+  );
 
   const { data: records, isLoading } = useQuery({
     queryKey: ["record"],
@@ -24,5 +34,20 @@ export default function useRecord() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["record"] }),
   });
 
-  return { records, isLoading, createRecord, deleteRecord, updateRecord };
+  if (records) {
+    recordDatasByMonth = records.filter(
+      (record) => +record.date.split("-")[1] === +month
+    );
+  }
+
+  return {
+    records,
+    isLoading,
+    createRecord,
+    deleteRecord,
+    updateRecord,
+    month,
+    selectMonth,
+    recordDatasByMonth,
+  };
 }
