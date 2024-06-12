@@ -1,79 +1,24 @@
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import useRecord from "../hooks/useRecord";
 import formatAmount from "../utils/formatAmount";
 import getRandomHexCode from "../utils/getRandomHexCode";
 
-const TotalOutlayDiv = styled.div`
-  display: flex;
-  gap: 8px;
-  flex-direction: column;
-  padding: 12px;
-  align-items: center;
-  background-color: #e2e8f0;
-  border-radius: 16px;
-`;
-const TotalOutlayDivH1 = styled.h1`
-  font-size: 20px;
-  font-weight: bold;
-`;
-
-const TotalOutlayGraph = styled.div`
-  display: flex;
-  width: 100%;
-  height: 20px;
-`;
-
 const TotalOutlayColorDiv = styled.div`
   width: ${(props) => props.$width};
-  height: 16px;
+  height: 24px;
   background-color: ${(props) => props.$bgColor};
-`;
-const TotalOutlayLegendDiv = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  font-weight: bold;
-`;
-const TotalOutlayLegend = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 2px;
-  border-style: solid;
-  border-color: black;
-`;
-const TotalOutlayLegendFlexDiv = styled.div`
-  flex: 1 1 0%;
-`;
-const TotalOutlayLegendCategory = styled(TotalOutlayLegendFlexDiv)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: flex;
-  gap: 8px;
-`;
-const TotalOutlayLegendText = styled(TotalOutlayLegendFlexDiv)`
-  text-align: end;
 `;
 
 export default function TotalOutlay() {
-  const { selectedMonth, recordsData } = useSelector((state) => state.record);
+  const { month: selectedMonth, recordDatasByMonth } = useRecord();
 
-  const filteredRecordsData = recordsData.filter(
-    ({ date }) => +date.split("-")[1] === +selectedMonth
-  );
-
-  const totalAmount = filteredRecordsData.reduce(
+  const totalAmount = recordDatasByMonth.reduce(
     (acc, cur) => acc + +cur.amount,
     0
   );
 
-  const categoryRecordsData = filteredRecordsData.reduce(
+  const categoryRecordsData = recordDatasByMonth.reduce(
     (acc, { category, amount }) => {
       if (acc[category]) {
         acc[category].amount += +amount;
@@ -107,11 +52,11 @@ export default function TotalOutlay() {
         ]);
 
   return (
-    <TotalOutlayDiv>
-      <TotalOutlayDivH1>
+    <div className="flex gap-2 flex-col p-3 items-center bg-[#e2e8f0] rounded-xl">
+      <h1 className="text-[20px] font-bold">
         {selectedMonth}월 총 지출:{formatAmount(totalAmount)}
-      </TotalOutlayDivH1>
-      <TotalOutlayGraph>
+      </h1>
+      <div className="flex w-full h-[20px] items-end">
         {items.map(([_, { amount, bgColor }]) => (
           <TotalOutlayColorDiv
             key={uuidv4()}
@@ -119,26 +64,27 @@ export default function TotalOutlay() {
             $bgColor={bgColor}
           ></TotalOutlayColorDiv>
         ))}
-      </TotalOutlayGraph>
-      <TotalOutlayLegendDiv>
+      </div>
+      <div className="w-full flex flex-col justify-center items-center gap-2 font-bold">
         {items.map(([category, { amount, bgColor }]) => (
-          <TotalOutlayLegend key={uuidv4()}>
-            <TotalOutlayLegendCategory>
+          <div
+            className="w-full flex items-center justify-center border-b-2 border-solid border-black gap-2 "
+            key={uuidv4()}
+          >
+            <div className="flex-1 line-clamp-1 gap-2 flex items-end h-full">
               <TotalOutlayColorDiv
                 $width={`16px`}
                 $bgColor={bgColor}
               ></TotalOutlayColorDiv>
-              <TotalOutlayLegendCategory>{category}</TotalOutlayLegendCategory>
-            </TotalOutlayLegendCategory>
-            <TotalOutlayLegendText>
-              {formatAmount(+amount)}
-            </TotalOutlayLegendText>
-            <TotalOutlayLegendText>
+              <div className="flex-1 line-clamp-1 gap-2 flex">{category}</div>
+            </div>
+            <div className="flex-1 text-end">{formatAmount(+amount)}</div>
+            <div className="flex-1 text-end">
               {((amount / totalAmount) * 100).toFixed(2)}%
-            </TotalOutlayLegendText>
-          </TotalOutlayLegend>
+            </div>
+          </div>
         ))}
-      </TotalOutlayLegendDiv>
-    </TotalOutlayDiv>
+      </div>
+    </div>
   );
 }
