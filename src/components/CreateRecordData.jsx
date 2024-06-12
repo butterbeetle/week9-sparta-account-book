@@ -21,7 +21,7 @@ export default function CreateRecordData() {
 
   const inputRef = useRef([]);
 
-  const createRecordDataHandler = () => {
+  const createRecordDataHandler = async () => {
     // console.log("HOME CREATE RECORD___");
 
     const category = inputRef.current[1].value;
@@ -93,8 +93,26 @@ export default function CreateRecordData() {
       content,
     };
 
-    //TODO 에러 처리 생각
-    createRecord(newRecordData);
+    try {
+      const response = await createRecord(newRecordData);
+      // console.log("CREATE RECORD DATA RESPONSE___", response);
+      toast.createToast({
+        id: uuidv4(),
+        title: "SUCCESS",
+        content: "지출 등록에 성공했습니다!!",
+        time: 3000,
+        variant: "success",
+      });
+    } catch (error) {
+      // console.log("CREATE RECORD DATA ERROR___", error);
+      toast.createToast({
+        id: uuidv4(),
+        title: "FAILED",
+        content: "미지의 존재가 등록을 방해했습니다..",
+        time: 3000,
+        variant: "error",
+      });
+    }
 
     // 일단 초기화
     inputRef.current[0].value = formatDate(new Date(), "full");
