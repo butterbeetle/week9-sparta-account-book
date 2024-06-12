@@ -1,16 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
 import { useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../../api/api";
+import { v4 as uuidv4 } from "uuid";
+import { useToast } from "../../context/toast.context";
 import useMe from "../../hooks/useMe";
 
 function MyPage() {
   const nav = useNavigate();
-  const { mutateAsync: updateUserInfo } = useMutation({
-    mutationFn: ({ token, data }) => api.auth.updateUserInfo(token, data),
-  });
 
-  const { user } = useMe();
+  const toast = useToast();
+  const { user, updatedUserInfo } = useMe();
 
   const [file, setFile] = useState();
 
@@ -26,12 +24,40 @@ function MyPage() {
   };
 
   const onClickHandler = async () => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    await updateUserInfo({
-      token,
-      data: { avatar: file, nickname: inputRef.current.value },
-    });
-    nav("/");
+    try {
+      const token = JSON.parse(localStorage.getItem("token"));
+      await updatedUserInfo({
+        token,
+        data: { avatar: file, nickname: inputRef.current.value },
+      });
+      toast.createToast({
+        id: uuidv4(),
+        title: "SUCCESS",
+        content: "프로필 수정에 성공했습니다!!",
+        time: 3000,
+        variant: "success",
+      });
+      nav("/");
+    } catch (error) {
+      console.log("MY PAGE UPDATE ERROR___", error);
+      if (error.response.status == 401) {
+        toast.createToast({
+          id: uuidv4(),
+          title: "FAILED",
+          content: "토큰이 만료되어 수정할 수 없습니다.",
+          time: 3000,
+          variant: "error",
+        });
+      } else {
+        toast.createToast({
+          id: uuidv4(),
+          title: "FAILED",
+          content: "알 수없는 에러로 프로필 수정에 실패했습니다!!",
+          time: 3000,
+          variant: "error",
+        });
+      }
+    }
   };
 
   return (
@@ -85,6 +111,14 @@ function MyPage() {
         type="button"
       >
         수정
+      </button>
+      <button
+        onClick={() => nav("/")}
+        className="p-3 text-base font-bold text-white bg-[#0a0426] border-none rounded-lg cursor-pointer
+      hover:bg-[#1c1c3b] hover:shadow-md active:bg-[#2c2c3b] active:shadow-inner  w-full"
+        type="button"
+      >
+        취소
       </button>
     </div>
   );
