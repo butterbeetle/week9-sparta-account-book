@@ -1,10 +1,9 @@
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
+import useMe from "../../hooks/useMe";
 
 const signUpDatas = [
   { id: "id", label: "아이디", minLength: 4, maxLength: 10 },
@@ -26,9 +25,7 @@ const signUpDatas = [
 function SignUpPage() {
   const toast = useToast();
   const nav = useNavigate();
-  const { mutateAsync: SignUp } = useMutation({
-    mutationFn: (signUpUserInfo) => api.auth.signUp(signUpUserInfo),
-  });
+  const { signUp } = useMe();
 
   const [inputData, setInputData] = useState({});
 
@@ -45,7 +42,7 @@ function SignUpPage() {
       // console.log("SUCCESS___");
       const {
         data: { message },
-      } = await SignUp(inputData);
+      } = await signUp(inputData);
 
       toast.createToast({
         id: uuidv4(),

@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "../components/PrivateRoute";
 import PublicRoute from "../components/PublicRoute";
 import DefaultLayout from "../layouts/DefaultLayout";
-import { defaultLayoutLoader } from "../layouts/DefaultLayout.loader";
 import HomePage from "../pages/HomePage/HomePage";
 import homePageLoader from "../pages/HomePage/HomePage.loader";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -14,7 +13,6 @@ import SignUpPage from "../pages/SignUpPage/SignUpPage";
 const router = createBrowserRouter([
   {
     element: <DefaultLayout />,
-    loader: defaultLayoutLoader,
     children: [
       {
         element: <PublicRoute />,
