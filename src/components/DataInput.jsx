@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 export default function DataInput({
   id,
   type = "text",
@@ -9,8 +7,6 @@ export default function DataInput({
   minLength,
   maxLength,
 }) {
-  const { errorData } = useSelector((state) => state.error);
-
   const onChangeHandler = (value) => {
     // console.log(value);
     setInputData((prev) => ({
@@ -43,14 +39,14 @@ export default function DataInput({
         peer-focus:scale-75 peer-focus:-translate-y-3"
         htmlFor={id}
       >
-        <div className="flex">
+        {/* <div className="flex">
           {label}
           {errorData[id] && (
             <p className="cursor-text text-base text-red-700 select-none ">{`${
               type === "date" ? "를" : "을"
             } 제대로 입력해주세요.`}</p>
           )}
-        </div>
+        </div> */}
       </label>
 
       {type !== "date" && (
