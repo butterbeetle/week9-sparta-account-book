@@ -10,7 +10,10 @@ export default function Calendar() {
         {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((month) => (
           <li
             className={clsx(
-              `select-none cursor-pointer p-2 rounded-lg border-2 border-solid text-center font-bold w-[15%] min-w-[60px] bg-[#fffafc] shadow-lg`,
+              `select-none cursor-pointer p-2 rounded-lg border-2 border-solid text-center 
+              font-bold w-[15%] min-w-[60px] bg-[#fffafc] shadow-md
+              active:bg-[#d2dff0]
+              active:shadow-inner`,
               {
                 "bg-[#d2dff0]": +selectedMonth === +month,
                 "text-gray-500": +selectedMonth === +month,
