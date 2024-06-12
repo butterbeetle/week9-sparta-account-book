@@ -3,7 +3,7 @@ import AuthAPI from "./auth.api";
 import RecordAPI from "./record.api";
 
 const AUTH_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
-const RECORD_BASE_URL = "http://localhost:5000";
+const RECORD_BASE_URL = "https://sugared-easy-shear.glitch.me";
 
 class API {
   #authClient;

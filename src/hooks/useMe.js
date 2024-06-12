@@ -28,9 +28,9 @@ export default function useMe() {
     enabled: !!accessToken,
     retry: false,
     refetchInterval: 1000 * 60 * 10,
-    // refetchOnMount: false,
-    // refetchOnWindowFocus: false,
-    // refetchOnReconnect: false,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
   const { mutateAsync: signUp } = useMutation({
@@ -48,20 +48,26 @@ export default function useMe() {
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      logInUser(userInfo.data);
-    } else if (isError) {
-      logOutUser();
+    if (userInfo) {
+      logInUser(userInfo);
     }
-  }, [isError, logOutUser, accessToken, isSuccess, logInUser, userInfo]);
+  }, [userInfo, logInUser]);
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     logInUser(userInfo.data);
+  //   } else if (isError) {
+  //     logOutUser();
+  //   }
+  // }, [isError, logOutUser, accessToken, isSuccess, logInUser, userInfo]);
 
   return {
-    userInfo,
+    // userInfo,
     logIn,
     signUp,
     updatedUserInfo,
-    isSuccess,
-    isError,
+    // isSuccess,
+    // isError,
 
     user,
     isLoggedIn,

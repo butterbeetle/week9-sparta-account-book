@@ -1,7 +1,12 @@
+import useLoginStore from "../zustand/login.store";
+
 class AuthAPI {
   #client;
+  #token;
 
   constructor(client) {
+    this.#token = JSON.parse(localStorage.getItem("token"));
+
     this.#client = client;
   }
 
@@ -12,24 +17,39 @@ class AuthAPI {
   }
 
   async logIn(loginUserInfo) {
-    const response = await this.#client.post(
-      // "/login",
-      "/login?expiresIn=10m",
-      // "/login?expiresIn=10s",
-      loginUserInfo
-    );
-    // console.log("API LOGIN RESPONSE__", response);
-    return response;
+    try {
+      const response = await this.#client.post(
+        // "/login",
+        "/login?expiresIn=10m",
+        // "/login?expiresIn=10s",
+        loginUserInfo
+      );
+      // console.log("API LOGIN RESPONSE__", response);
+      return response;
+    } catch (error) {
+      console.log("API LOGIN ERROR__", error);
+    }
   }
 
   async getUserInfo(accessToken) {
-    const response = await this.#client.get("/user", {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    // console.log("API GET USER INFO RESPONSE__", response);
-    return response;
+    // console.log("TOKEN___", accessToken);
+    try {
+      const response = await this.#client.get("/user", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      // console.log("API GET USER INFO RESPONSE__", response);
+      if (response?.data) {
+        useLoginStore.setState(() => ({
+          user: response.data,
+          isLoggedIn: true,
+        }));
+      }
+      return response.data;
+    } catch (error) {
+      console.log("GET USER INFO___", error);
+    }
   }
 
   async updateUserInfo(accessToken, updatedUserInfo) {

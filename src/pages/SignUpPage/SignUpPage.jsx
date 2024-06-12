@@ -1,4 +1,4 @@
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import { useToast } from "../../context/toast.context";
@@ -7,12 +7,16 @@ import useMe from "../../hooks/useMe";
 function SignUpPage() {
   const toast = useToast();
   const nav = useNavigate();
-  const { signUp } = useMe();
+  const { isLoggedIn, signUp } = useMe();
 
   const inputRef = useRef([]);
   const userId = useId();
   const passwordId = useId();
   const nickNameId = useId();
+
+  useEffect(() => {
+    if (isLoggedIn) nav("/", { replace: true });
+  }, [nav, isLoggedIn]);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();

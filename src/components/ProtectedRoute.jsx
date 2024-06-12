@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import useMe from "../hooks/useMe";
 
-export default function PrivateRoute() {
+export default function ProtectedRoute() {
   const { isLoggedIn } = useMe();
   // console.log("PROTECTED ROUTE LOGGEDIN___", isLoggedIn);
 

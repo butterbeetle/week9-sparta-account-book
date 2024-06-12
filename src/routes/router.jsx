@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import PrivateRoute from "../components/PrivateRoute";
-import PublicRoute from "../components/PublicRoute";
+import ProtectedRoute from "../components/ProtectedRoute";
 import DefaultLayout from "../layouts/DefaultLayout";
 import HomePage from "../pages/HomePage/HomePage";
 import homePageLoader from "../pages/HomePage/HomePage.loader";
@@ -15,20 +14,15 @@ const router = createBrowserRouter([
     element: <DefaultLayout />,
     children: [
       {
-        element: <PublicRoute />,
-        children: [
-          {
-            path: "/login",
-            element: <LoginPage />,
-          },
-          {
-            path: "/signup",
-            element: <SignUpPage />,
-          },
-        ],
+        path: "/login",
+        element: <LoginPage />,
       },
       {
-        element: <PrivateRoute />,
+        path: "/signup",
+        element: <SignUpPage />,
+      },
+      {
+        element: <ProtectedRoute />,
         children: [
           {
             path: "/",

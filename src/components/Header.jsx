@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import useMe from "../hooks/useMe";
 
 export default function Header() {
-  const { userInfo, isLoggedIn, logOutUser } = useMe();
+  const { user, isLoggedIn, logOutUser } = useMe();
 
   return (
     <header className="border-b-2 p-3 bg-[#e6eef8] select-none h-14 ">
@@ -28,8 +28,8 @@ export default function Header() {
               <img
                 className="rounded-full size-8 hover:shadow-md"
                 src={
-                  userInfo?.data.avatar
-                    ? userInfo?.data.avatar
+                  user.avatar
+                    ? user.avatar
                     : "http://via.placeholder.com/640x480"
                 }
                 alt="profile"
@@ -37,7 +37,7 @@ export default function Header() {
             </Link>
             <Link to="/my">
               <p className="font-bold hover:underline cursor-pointer">
-                {userInfo?.data.nickname}
+                {user.nickname}
               </p>
             </Link>
             <div
