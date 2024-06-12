@@ -1,16 +1,15 @@
 import { useId, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import useMe from "../hooks/useMe";
 import useRecord from "../hooks/useRecord";
 import formatDate from "../utils/formatDate";
-import useLoginStore from "../zustand/login.store";
 
 export default function CreateRecordData() {
   // 커스텀 후끄
   const { createRecord } = useRecord();
 
   // zustand에 저장되어있는 유저 데이터
-  const nickname = useLoginStore((state) => state.nickname);
-  const userId = useLoginStore((state) => state.userId);
+  const { user } = useMe();
 
   // Id 설정
   const dateId = useId();
@@ -21,18 +20,18 @@ export default function CreateRecordData() {
   const inputRef = useRef([]);
 
   const createRecordDataHandler = () => {
-    console.log("HOME CREATE RECORD___");
+    // console.log("HOME CREATE RECORD___");
     //TODO 유효성 검사 해야함
     const newRecordData = {
       id: uuidv4(),
-      userId,
-      createdBy: nickname,
+      userId: user.id,
+      createdBy: user.nickname,
       date: inputRef.current[0].value,
       category: inputRef.current[1].value,
       amount: inputRef.current[2].value,
       content: inputRef.current[3].value,
     };
-    console.log(newRecordData);
+    // console.log(newRecordData);
     // const validateErrors = validateInput(inputData);
 
     //TODO 에러 처리 생각

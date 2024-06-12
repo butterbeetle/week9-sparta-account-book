@@ -2,8 +2,8 @@ import { useId, useRef, useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Modal from "../../components/ui/Modal";
 import Portal from "../../components/ui/Portal";
+import useMe from "../../hooks/useMe";
 import useRecord from "../../hooks/useRecord";
-import useLoginStore from "../../zustand/login.store";
 
 export default function RecordDetailPage() {
   const [openModal, setOpenModal] = useState(false);
@@ -12,8 +12,7 @@ export default function RecordDetailPage() {
   const { deleteRecord, updateRecord } = useRecord();
 
   // zustand에 저장되어있는 유저 데이터
-  const userId = useLoginStore((state) => state.userId);
-  const nickname = useLoginStore((state) => state.nickname);
+  const { user } = useMe();
 
   // 미리 받아온 데이터
   const {
@@ -37,8 +36,8 @@ export default function RecordDetailPage() {
     // console.log("RECORD DETAIL UPDATE___");
     const newRecordData = {
       id: recordId,
-      userId,
-      createdBy: nickname,
+      userId: user.userId,
+      createdBy: user.nickname,
       date: inputRef.current[0].value,
       category: inputRef.current[1].value,
       amount: inputRef.current[2].value,
@@ -196,7 +195,7 @@ export default function RecordDetailPage() {
         </label>
       </div>
 
-      {userId === recordUserId && (
+      {user.id === recordUserId && (
         <>
           <button
             onClick={() => updateRecordDataHandler()}

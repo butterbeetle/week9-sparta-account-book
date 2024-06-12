@@ -1,12 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-import api from "../../api/api";
 import DataInput from "../../components/DataInput";
 import { useToast } from "../../context/toast.context";
+import useMe from "../../hooks/useMe";
 import formatDate from "../../utils/formatDate";
-import useLoginStore from "../../zustand/login.store";
 
 const initialInputData = {
   date: formatDate(new Date()),
@@ -29,17 +27,16 @@ const loginDatas = [
 function LoginPage() {
   const toast = useToast();
   const nav = useNavigate();
-  const { mutateAsync: LogIn } = useMutation({
-    mutationFn: (loginUserInfo) => api.auth.logIn(loginUserInfo),
-  });
+  const { logIn, logInUser } = useMe();
+
   const [loginUserInfo, setLoginUserInfo] = useState(initialInputData);
-  const setUser = useLoginStore((state) => state.setUser);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     // console.log("LOGIN SUBMIT___");
     try {
-      const { data } = await LogIn(loginUserInfo);
+      const { data } = await logIn(loginUserInfo);
+      // console.log(data);
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       toast.createToast({
         id: uuidv4(),
@@ -49,7 +46,7 @@ function LoginPage() {
         variant: "success",
       });
 
-      setUser(data);
+      logInUser(data);
       nav("/", { replace: true });
     } catch (error) {
       const { code, message, response } = error;

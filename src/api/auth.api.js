@@ -13,8 +13,8 @@ class AuthAPI {
 
   async logIn(loginUserInfo) {
     const response = await this.#client.post(
-      "/login",
-      // "/login?expiresIn=10m",
+      // "/login",
+      "/login?expiresIn=10s",
       loginUserInfo
     );
     // console.log("API LOGIN RESPONSE__", response);
@@ -33,14 +33,16 @@ class AuthAPI {
   }
 
   async updateUserInfo(accessToken, updatedUserInfo) {
-    console.log(accessToken, updatedUserInfo);
+    // console.log(accessToken, updatedUserInfo);
     const response = await this.#client.patch("/profile", updatedUserInfo, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("API UPDATE USER INFO RESPONSE__", response);
+    // console.log("API UPDATE USER INFO RESPONSE__", response);
+
+    return response;
   }
 }
 

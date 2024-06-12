@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useId, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useShallow } from "zustand/react/shallow";
 import api from "../../api/api";
-import useLoginStore from "../../zustand/login.store";
+import useMe from "../../hooks/useMe";
 
 function MyPage() {
   const nav = useNavigate();
@@ -11,14 +10,7 @@ function MyPage() {
     mutationFn: ({ token, data }) => api.auth.updateUserInfo(token, data),
   });
 
-  const { isLoggedIn, nickname, avatar, clearuser } = useLoginStore(
-    useShallow((state) => ({
-      isLoggedIn: state.isLoggedIn,
-      nickname: state.nickname,
-      avatar: state.avatar,
-      clearUser: state.clearUser,
-    }))
-  );
+  const { user } = useMe();
 
   const [file, setFile] = useState();
 
@@ -41,6 +33,7 @@ function MyPage() {
     });
     nav("/");
   };
+
   return (
     <div
       className="border-red-100 border-2 border-solid  rounded-md flex flex-col items-center p-4 gap-3
@@ -50,7 +43,7 @@ function MyPage() {
       <div className="border-2 border-red-500 size-[200px] aspect-square rounded-full flex items-center justify-center">
         <img
           className="rounded-full size-full hover:shadow-md"
-          src={avatar ? avatar : "http://via.placeholder.com/640x480"}
+          src={user.avatar ? user.avatar : "http://via.placeholder.com/640x480"}
           alt="profile"
         ></img>
       </div>
@@ -62,7 +55,7 @@ function MyPage() {
                      border border-solid border-[#0a0426] rounded-md text-[#0a0426]
                      hover:shadow-md peer select-none"
           id={nickNameId}
-          defaultValue={nickname}
+          defaultValue={user.nickname}
           minLength={1}
           maxLength={10}
         />

@@ -2,17 +2,13 @@ import { create } from "zustand";
 
 const useLoginStore = create((set) => ({
   isLoggedIn: false,
-  avatar: "",
-  nickname: "",
-  userId: "",
-  setUser: (data) => set({ ...data, isLoggedIn: true }),
-  clearUser: () => {
+  user: null,
+  logInUser: (user) => set({ user, isLoggedIn: true }),
+  logOutUser: () => {
     localStorage.removeItem("token");
     set({
+      user: null,
       isLoggedIn: false,
-      avatar: "",
-      nickname: "",
-      userId: "",
     });
   },
 }));
