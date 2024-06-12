@@ -56,7 +56,7 @@ export default function TotalOutlay() {
       <h1 className="text-[20px] font-bold">
         {selectedMonth}월 총 지출:{formatAmount(totalAmount)}
       </h1>
-      <div className="flex w-full h-[20px] items-end">
+      <div className="flex w-full h-[20px] items-end divide-x-2 divide-solid">
         {items.map(([_, { amount, bgColor }]) => (
           <TotalOutlayColorDiv
             key={uuidv4()}
