@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import api from "../api/api";
 import useLoginStore from "../zustand/login.store";
@@ -48,14 +47,14 @@ export default function useMe() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["user"] }),
   });
 
-  useEffect(() => {
-    // if (userInfo) {
-    //   logInUser(userInfo);
-    // }
-    if (!accessToken) {
-      logOutUser();
-    }
-  }, [userInfo, logInUser, accessToken, logOutUser]);
+  // useEffect(() => {
+  // if (userInfo) {
+  //   logInUser(userInfo);
+  // }
+  // if (!accessToken) {
+  //   logOutUser();
+  // }
+  // }, [userInfo, logInUser, accessToken, logOutUser]);
 
   // useEffect(() => {
   //   if (isSuccess) {
