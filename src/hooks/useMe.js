@@ -28,6 +28,7 @@ export default function useMe() {
     enabled: !!accessToken,
     retry: false,
     refetchInterval: 1000 * 60 * 10,
+    // refetchInterval: 1000 * 10,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
