@@ -14,18 +14,19 @@ class AuthAPI {
   }
 
   async logIn(loginUserInfo) {
-    try {
-      const response = await this.#client.post(
-        // "/login",
-        "/login?expiresIn=10m",
-        // "/login?expiresIn=10s",
-        loginUserInfo
-      );
-      // console.log("API LOGIN RESPONSE__", response);
-      return response;
-    } catch (error) {
-      console.log("API LOGIN ERROR__", error);
-    }
+    // try {
+    const response = await this.#client.post(
+      // "/login",
+      "/login?expiresIn=10m",
+      // "/login?expiresIn=10s",
+      loginUserInfo
+    );
+    // console.log("API LOGIN RESPONSE__", response);
+    return response;
+    // } catch (error) {
+    //   console.log("API LOGIN ERROR__", error);
+    //   return error;
+    // }
   }
 
   async getUserInfo(accessToken) {

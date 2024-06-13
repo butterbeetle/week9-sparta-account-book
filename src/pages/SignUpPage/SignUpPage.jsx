@@ -35,7 +35,7 @@ function SignUpPage() {
 
       toast.createToast({
         id: uuidv4(),
-        title: "Success",
+        title: "SUCCESS",
         content: message,
         time: 3000,
         variant: "success",
@@ -46,7 +46,7 @@ function SignUpPage() {
       // console.log("SIGN UP ERROR___", code, message, response.data.message);
       toast.createToast({
         id: uuidv4(),
-        title: code,
+        title: "FAILED",
         content: response.data.message,
         time: 3000,
         variant: "error",

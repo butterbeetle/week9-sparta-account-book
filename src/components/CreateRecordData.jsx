@@ -31,7 +31,7 @@ export default function CreateRecordData() {
     if (!category || !amount || !content) {
       toast.createToast({
         id: uuidv4(),
-        title: "무언가 비어있습니다.",
+        title: "FAILED",
         content: "항목, 금액, 내용은 필수 사항 입니다!!",
         time: 3000,
         variant: "error",
@@ -42,7 +42,7 @@ export default function CreateRecordData() {
     if (category.length > 6) {
       toast.createToast({
         id: uuidv4(),
-        title: "항목을 확인해주세요.",
+        title: "FAILED",
         content: "항목은 6자내로 입력해주세요!!",
         time: 3000,
         variant: "error",
@@ -53,7 +53,7 @@ export default function CreateRecordData() {
     if (isNaN(amount) || +amount < 0) {
       toast.createToast({
         id: uuidv4(),
-        title: "금액을 확인해주세요.",
+        title: "FAILED",
         content: "올바른 금액을 입력해주세요!!",
         time: 3000,
         variant: "error",
@@ -64,7 +64,7 @@ export default function CreateRecordData() {
     if (+amount > 1e10) {
       toast.createToast({
         id: uuidv4(),
-        title: "금액을 확인해주세요.",
+        title: "FAILED",
         content: "이렇게 많은 돈을 사용했을리가 없잖아..!!",
         time: 3000,
         variant: "error",
@@ -75,7 +75,7 @@ export default function CreateRecordData() {
     if (content.length > 30) {
       toast.createToast({
         id: uuidv4(),
-        title: "내용을 확인해주세요.",
+        title: "FAILED",
         content: "내용은 30자내로 입력해주세요!!",
         time: 3000,
         variant: "error",

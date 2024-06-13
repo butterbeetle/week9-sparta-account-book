@@ -27,12 +27,14 @@ function LoginPage() {
 
     // console.log("LOGIN SUBMIT___");
     try {
-      const { data } = await logIn(loginUserInfo);
+      const response = await logIn(loginUserInfo);
+      // console.log(response);
+      const data = response.data;
       // console.log(data);
       localStorage.setItem("token", JSON.stringify(data.accessToken));
       toast.createToast({
         id: uuidv4(),
-        title: "Success",
+        title: "SUCCESS",
         content: "로그인에 성공하였습니다.",
         time: 3000,
         variant: "success",
@@ -41,11 +43,12 @@ function LoginPage() {
       logInUser(data);
       nav("/", { replace: true });
     } catch (error) {
+      // console.log(error);
       const { code, message, response } = error;
       // console.log("LOGIN ERROR___", code, message, response.data.message);
       toast.createToast({
         id: uuidv4(),
-        title: code,
+        title: "FAILED",
         content: response.data.message,
         time: 3000,
         variant: "error",
