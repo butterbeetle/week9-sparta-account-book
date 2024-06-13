@@ -2,8 +2,8 @@ import axios from "axios";
 import AuthAPI from "./auth.api";
 import RecordAPI from "./record.api";
 
-const AUTH_BASE_URL = "https://moneyfulpublicpolicy.co.kr";
-const RECORD_BASE_URL = "https://sugared-easy-shear.glitch.me";
+const AUTH_BASE_URL = import.meta.env.VITE_AUTH_BASE_URL;
+const RECORD_BASE_URL = import.meta.env.VITE_RECORD_BASE_URL;
 
 class API {
   #authClient;
