@@ -97,6 +97,7 @@ function MyPage() {
           className="hidden"
           id="file"
           type="file"
+          accept=".jpg, .jpeg, .png, .webp, .gif"
           onChange={(e) => onChangeHandler(e)}
         />
       </div>
