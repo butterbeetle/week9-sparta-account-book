@@ -48,10 +48,13 @@ export default function useMe() {
   });
 
   useEffect(() => {
-    if (userInfo) {
-      logInUser(userInfo);
+    // if (userInfo) {
+    //   logInUser(userInfo);
+    // }
+    if (!accessToken) {
+      logOutUser();
     }
-  }, [userInfo, logInUser]);
+  }, [userInfo, logInUser, accessToken, logOutUser]);
 
   // useEffect(() => {
   //   if (isSuccess) {

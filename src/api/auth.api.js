@@ -48,7 +48,10 @@ class AuthAPI {
       }
       return response.data;
     } catch (error) {
+      localStorage.removeItem("token");
+      useLoginStore.setState(() => ({ user: null, isLoggedIn: false }));
       console.log("GET USER INFO___", error);
+      return error;
     }
   }
 

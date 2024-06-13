@@ -3,9 +3,10 @@ import useMe from "../hooks/useMe";
 
 export default function ProtectedRoute() {
   const { isLoggedIn } = useMe();
-  // console.log("PROTECTED ROUTE LOGGEDIN___", isLoggedIn);
+  const token = localStorage.getItem("token");
+  // console.log("PROTECTED ROUTE LOGGEDIN___", isLoggedIn, token ? true : false);
 
-  if (!isLoggedIn) {
+  if (!token && !isLoggedIn) {
     return <Navigate to="/login" replace />;
   }
 
