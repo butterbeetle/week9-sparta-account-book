@@ -2,7 +2,7 @@
 
 ##### 주제: 숙련주차때 만든 지출 관리 시스템에 인증 기능을 추가하고 JSON 서버를 이용해 데이터를 관리한다.
 
-[사이트 바로가기](https://week9-sparta-account-book.vercel.app/login)
+[사이트 바로가기](https://week9-sparta-account-book.vercel.app)
 
 ## ⏰ 기한
 
