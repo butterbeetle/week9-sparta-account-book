@@ -8,7 +8,7 @@ function MyPage() {
   const nav = useNavigate();
 
   const toast = useToast();
-  const { user, updatedUserInfo } = useMe();
+  const { user, updatedUserInfo, accessToken } = useMe();
 
   const [file, setFile] = useState();
 
@@ -25,7 +25,7 @@ function MyPage() {
 
   const onClickHandler = async () => {
     try {
-      const accessToken = JSON.parse(localStorage.getItem("token"));
+      // const accessToken = JSON.parse(localStorage.getItem("token"));
       await updatedUserInfo({
         accessToken,
         updatedUserInfo: { avatar: file, nickname: inputRef.current.value },
