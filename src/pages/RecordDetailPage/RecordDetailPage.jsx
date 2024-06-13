@@ -278,7 +278,7 @@ export default function RecordDetailPage() {
         </label>
       </div>
 
-      {user.id === recordUserId && (
+      {user?.id === recordUserId && (
         <>
           <button
             onClick={() => updateRecordDataHandler()}
