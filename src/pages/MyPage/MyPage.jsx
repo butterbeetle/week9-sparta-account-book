@@ -10,7 +10,7 @@ function MyPage() {
   const toast = useToast();
   const { user, updatedUserInfo, accessToken } = useMe();
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState(null);
 
   const inputRef = useRef(null);
   const nickNameId = useId();
@@ -63,17 +63,43 @@ function MyPage() {
   return (
     <div
       className="border-red-100 border-2 border-solid  rounded-md flex flex-col items-center p-4 gap-3
-  bg-[#e2e8f0]"
+  bg-[#e2e8f0] select-none"
     >
       <h1 className="text-2xl font-bold">내 프로필</h1>
       <div className="border-2 border-red-500 size-[200px] aspect-square rounded-full flex items-center justify-center">
-        <img
-          className="rounded-full size-full hover:shadow-md"
-          src={user.avatar ? user.avatar : "http://via.placeholder.com/640x480"}
-          alt="profile"
-        ></img>
+        {!file && (
+          <img
+            className="rounded-full size-full hover:shadow-md"
+            src={
+              user.avatar ? user.avatar : "http://via.placeholder.com/640x480"
+            }
+            alt="profile"
+          />
+        )}
+        {file && (
+          <img
+            className="rounded-full size-full hover:shadow-md"
+            src={URL.createObjectURL(file)}
+            alt="profile"
+          />
+        )}
       </div>
-      <input type="file" onChange={(e) => onChangeHandler(e)} />
+      <div>
+        <label htmlFor="file">
+          <div
+            className="text-white p-2 bg-[#0a0426] border-none rounded-lg cursor-pointer
+      hover:bg-[#1c1c3b] hover:shadow-md active:bg-[#2c2c3b] active:shadow-inner"
+          >
+            🔗 Upload a photo
+          </div>
+        </label>
+        <input
+          className="hidden"
+          id="file"
+          type="file"
+          onChange={(e) => onChangeHandler(e)}
+        />
+      </div>
       <div className="relative">
         <input
           ref={(el) => (inputRef.current = el)}
