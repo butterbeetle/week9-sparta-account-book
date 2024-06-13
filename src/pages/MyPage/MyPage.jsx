@@ -72,7 +72,7 @@ function MyPage() {
           <img
             className="rounded-full size-full hover:shadow-md"
             src={
-              user.avatar ? user.avatar : "http://via.placeholder.com/640x480"
+              user?.avatar ? user.avatar : "http://via.placeholder.com/640x480"
             }
             alt="profile"
           />
@@ -109,7 +109,7 @@ function MyPage() {
                      border border-solid border-[#0a0426] rounded-md text-[#0a0426]
                      hover:shadow-md peer select-none"
           id={nickNameId}
-          defaultValue={user.nickname}
+          defaultValue={user?.nickname}
           minLength={1}
           maxLength={10}
         />
