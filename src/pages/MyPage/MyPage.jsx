@@ -18,6 +18,7 @@ function MyPage() {
   const onChangeHandler = (e) => {
     e.preventDefault();
     const files = e.target?.files;
+
     if (files && files[0]) {
       setFile(files[0]);
     }
