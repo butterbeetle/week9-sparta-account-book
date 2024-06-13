@@ -12,12 +12,13 @@ export default function Calendar() {
             className={clsx(
               `select-none cursor-pointer p-2 rounded-lg border-2 border-solid text-center 
               font-bold w-[15%] min-w-[60px] bg-[#fffafc] shadow-md
-              active:bg-[#d2dff0]
-              active:shadow-inner`,
+              active:bg-[#b1caeb]
+              active:shadow-[inset_0_4px_4px_gray]`,
               {
-                "bg-[#d2dff0]": +selectedMonth === +month,
-                "text-gray-500": +selectedMonth === +month,
-                "shadow-[inset_0_6px_4px_black]": +selectedMonth === +month,
+                "bg-[#b1caeb]": +selectedMonth === +month,
+              },
+              {
+                "shadow-[inset_0_4px_4px_black]": +selectedMonth === +month,
               }
             )}
             key={month}

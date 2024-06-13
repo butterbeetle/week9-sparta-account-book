@@ -17,11 +17,7 @@ export default function useMe() {
     }))
   );
 
-  const {
-    data: userInfo,
-    isSuccess,
-    isError,
-  } = useQuery({
+  const { data: queryUserInfo } = useQuery({
     queryKey: ["user"],
     queryFn: () => api.auth.getUserInfo(accessToken),
     enabled: !!accessToken,
@@ -47,31 +43,12 @@ export default function useMe() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["user"] }),
   });
 
-  // useEffect(() => {
-  // if (userInfo) {
-  //   logInUser(userInfo);
-  // }
-  // if (!accessToken) {
-  //   logOutUser();
-  // }
-  // }, [userInfo, logInUser, accessToken, logOutUser]);
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     logInUser(userInfo.data);
-  //   } else if (isError) {
-  //     logOutUser();
-  //   }
-  // }, [isError, logOutUser, accessToken, isSuccess, logInUser, userInfo]);
-
   return {
-    // userInfo,
+    queryUserInfo,
     logIn,
     signUp,
     updatedUserInfo,
     accessToken,
-    // isSuccess,
-    // isError,
 
     user,
     isLoggedIn,
