@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Header from "../components/Header";
 
 export default function DefaultLayout() {
@@ -9,6 +9,7 @@ export default function DefaultLayout() {
         <Outlet />
         <div id="portal" />
       </main>
+      <ScrollRestoration />
     </>
   );
 }
