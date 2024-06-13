@@ -2,11 +2,8 @@ import useLoginStore from "../zustand/login.store";
 
 class AuthAPI {
   #client;
-  #token;
 
   constructor(client) {
-    this.#token = JSON.parse(localStorage.getItem("token"));
-
     this.#client = client;
   }
 
